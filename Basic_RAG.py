@@ -29,6 +29,6 @@ qa_chain = RetrievalQA.from_chain_type(
     retriever=vectorstore.as_retriever()
 )
 
-query = "Is the relation of Mortimer and Paulet important?"
+query = "Who did the translation of this book?"
 response = qa_chain.invoke(query)
 print(response)
