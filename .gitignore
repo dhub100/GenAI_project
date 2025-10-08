@@ -1,0 +1,29 @@
+# Byte-compiled / optimierte / andere Python-Objekte
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.pyo
+
+# Virtuelle Umgebungen
+.venv/
+venv/
+env/
+ENV/
+
+# IDE-Einstellungen
+.idea/
+*.iml
+
+# FAISS-Datenbank
+FAISS_db/
+
+# Umgebungsvariablen
+.env
+
+# Sonstige
+.DS_Store
+Thumbs.db
