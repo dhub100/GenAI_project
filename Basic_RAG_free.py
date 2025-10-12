@@ -32,12 +32,12 @@ from langchain_ollama import ChatOllama
 # Use free Hugging Face embeddings instead of OpenAIEmbeddings
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-faiss_path = "FAISS_db_v2/RAG"
+faiss_path = "FAISS_db_Orwell/RAG"
 
 if os.path.exists(faiss_path):
     vectorstore = FAISS.load_local(faiss_path, embeddings, allow_dangerous_deserialization=True)
 else:
-    loader = PyPDFLoader("Schiller_Mary_Stuart.pdf")
+    loader = PyPDFLoader("George_Orwell_1984.pdf")
     documents = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=400)
     texts = text_splitter.split_documents(documents)
@@ -53,6 +53,6 @@ qa_chain = RetrievalQA.from_chain_type(
     retriever=vectorstore.as_retriever()
 )
 
-query = "What is the relation between Mary and Elisabeth?"
+query = "What is the Junior Anti-Sex League Orwell is writing about?"
 response = qa_chain.invoke(query)
 print(response)
