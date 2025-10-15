@@ -20,6 +20,9 @@ try:
 except LookupError:
     nltk.download('punkt_tab')
 
+print("Make sure the Ollama server is running (use 'ollama serve' in another terminal)\n.")
+print("The server must be active once per session before starting this script.\n")
+
 ## Install Ollama locally:
 # https://ollama.com/download
 
@@ -28,6 +31,10 @@ except LookupError:
 
 ## Start the server (bash)
 # ollama serve
+
+
+#### Utility functions ####
+
 
 ### Semantic chunking function ###
 def semantic_chunk_text(text, target_length=800, overlap_sentences=2):
@@ -49,31 +56,90 @@ def semantic_chunk_text(text, target_length=800, overlap_sentences=2):
     return chunks
 
 
-# Use free Hugging Face embeddings
+### Query expansion function ###
+def expand_query(llm, original_query: str) -> tuple[str, list[str]]:
+    """
+    Expands the user's query using the local LLM. Returns:
+    - A single combined string for the RAG input
+    - A list of alternative rephrasings (for display/logging)
+    """
+    print("Expanding query...")
+
+    prompt = (
+        f"Rephrase the following question in 3–5 alternative ways using synonyms or related concepts. "
+        f"Only return a simple comma-separated list of the alternative questions. "
+        f"Do not add explanations or headings.\n\n"
+        f"Question: {original_query}\n\n"
+        f"List:"
+    )
+
+    try:
+        response = llm.invoke(prompt)
+        expanded_text = response.content.strip()
+
+        # Parse the list from the model output
+        expanded_list = [q.strip() for q in expanded_text.split(",") if q.strip()]
+
+        # Combine all rephrasings into one natural expanded query
+        combined_expanded = (
+            "Please answer the following related questions together as one: "
+            + "; ".join(expanded_list)
+        )
+
+        return combined_expanded, expanded_list
+
+    except Exception as e:
+        print(f"Query expansion failed: {e}")
+        return original_query, [original_query]  # fallback
+
+
+#### Embedding & Vectorstore setup ####
+
+
+### Use free Hugging Face embeddings ###
+print("Loading sentence-transformer embeddings...")
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 
+### building FAISS index ###
+
 faiss_path = "FAISS_db_Orwell/RAG"
 
-# --- Control whether to rebuild the FAISS index ---
-rebuild_faiss = True  # set to True to force re-indexing (e.g., after changing chunking strategy)
+# Control whether to rebuild the FAISS index ###
+rebuild_faiss = False  # set to True to force re-indexing (e.g., after changing chunking strategy)
 
 if os.path.exists(faiss_path) and not rebuild_faiss:
+    print("Loading existing FAISS vector database...")
     vectorstore = FAISS.load_local(faiss_path, embeddings, allow_dangerous_deserialization=True)
 else:
+    print("Creating new FAISS vector database from PDF...")
     loader = PyPDFLoader("George_Orwell_1984.pdf")
     documents = loader.load()
-    # --- Combine all pages into a single string ---
+    #Combine all pages into a single string
     full_text = " ".join([doc.page_content for doc in documents])
-    # --- Apply semantic chunking ---
+    #Apply semantic chunking
     semantic_chunks = semantic_chunk_text(full_text, target_length=800, overlap_sentences=2)
-    # --- Convert chunks to LangChain Document objects ---
-    texts = [Document(page_content=chunk) for chunk in semantic_chunks]
-    # --- Create FAISS vectorstore ---
+    #Convert chunks to LangChain Document objects
+    texts = [
+        Document(
+            page_content=chunk,
+            metadata={
+                "source": "George_Orwell_1984.pdf",
+                "chunk_id": i + 1
+            }
+        )
+        for i, chunk in enumerate(semantic_chunks)
+    ]
+    #Create FAISS vectorstore
     vectorstore = FAISS.from_documents(texts, embeddings)
     vectorstore.save_local(faiss_path)
+    print("New FAISS database saved.")
 
-# Use local Llama 3.1 model via Ollama
+
+#### LLM & Retrieval chain ####
+
+### Use local Llama 3.1 model via Ollama ###
+print("Loading local Llama 3.1 model via Ollama...")
 llm = ChatOllama(model="llama3.1:8b", temperature=0.1)
 
 qa_chain = RetrievalQA.from_chain_type(
@@ -82,20 +148,39 @@ qa_chain = RetrievalQA.from_chain_type(
     retriever=vectorstore.as_retriever()
 )
 
+#### Query & output ####
+
+# Query function
 
 def answer_query(query: str):
-    """
-    Runs the RAG pipeline on a given query and returns the model's answer.
-    """
-    print("💭 Thinking... (retrieving context and generating answer, this may take a while)")
-    response = qa_chain.invoke(query)
-    print("✅ Done!\n")
-    return response
+    print("\nPreparing query expansion...")
+    expanded_query, expanded_list = expand_query(llm, query)
+
+    print("\nExpanded Prompts:")
+    for q in expanded_list:
+        print(" -", q)
+
+    expanded_query = (
+            "Answer briefly (max 3 sentences) and only based on the retrieved context.\n\n"
+            + expanded_query
+    )
+    print("\nRetrieving context and generating answer...")
+    response = qa_chain.invoke(expanded_query)
+    print("Done!\n")
+
+    if isinstance(response, dict) and "result" in response:
+        final_answer = response["result"]
+    else:
+        final_answer = response
+
+    print("Final Answer:\n", final_answer)
+    return final_answer
 
 
 # Run only when executed directly (not when imported)
 if __name__ == "__main__":
     query = "What is the Junior Anti-Sex League Orwell is writing about?"
-    answer = answer_query(query)
-    print(answer)
+    final_answer = answer_query(query)
+    print("\nFinal Answer (as string variable):")
+    print(final_answer)
 
