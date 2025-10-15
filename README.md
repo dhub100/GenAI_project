@@ -1,7 +1,10 @@
 # Advanced RAG with LangChain, Hugging Face, and Ollama
 
 This project demonstrates an **Advanced Retrieval-Augmented Generation (RAG)** pipeline built with **LangChain**, **Hugging Face embeddings**, and a locally running **Llama 3.1** model via **Ollama**.  
+
 The system answers questions based on the content of *George Orwell’s 1984* and integrates several improvements beyond a basic RAG setup.
+
+The script automatically performs document loading, semantic chunking, embedding, vector search, and context-based answering.
 
 ---
 
@@ -42,8 +45,14 @@ pip install langchain langchain-community langchain-ollama faiss-cpu sentence-tr
 
 ## Usage
 
-Run the script:
+Before running the script, make sure the **Ollama server** is running.  
+You only need to start it **once per session**, and it must stay active while the script runs.
 
+Start the Ollama server (in a separate terminal)
+```bash
+ollama serve
+```
+Then, run the Advanced RAG script in another terminal:
 ```bash
 python advanced_rag.py
 ```
@@ -58,6 +67,32 @@ The script will:
 Example query:
 ```
 What is the Junior Anti-Sex League Orwell is writing about?
+```
+
+---
+
+## Output
+
+When you run the script, you will see several progress messages in the console:
+
+1. **Loading steps** – confirms that embeddings, the FAISS vector database, and the local Llama model were loaded correctly.  
+2. **Query expansion** – the script generates 3–5 alternative versions of your question and prints them. These rephrased prompts are also available in a Python list (`expanded_list`) for further analysis or evaluation.  
+3. **Retrieval & generation** – progress messages indicate when the system retrieves relevant chunks and when the final answer is being generated.  
+4. **Final Answer** – a single, context-based, concise answer is printed at the end of the run.  
+5. The final answer is also stored internally as a string variable (`final_answer`), which can be reused in code or saved to a file.
+
+Example:
+```
+Preparing query expansion...
+Expanded Prompts:
+ - What is the purpose of the Junior Anti-Sex League in 1984
+ - What role does the Junior Anti-Sex League play in Orwell’s dystopian society
+...
+Retrieving context and generating answer...
+Done!
+
+Final Answer:
+The Junior Anti-Sex League is a propaganda organization that promotes the Party’s ideology...
 ```
 
 ---
@@ -81,16 +116,6 @@ This project implements four practical enhancements to move from a **naive RAG**
 4. **Structured Prompting**  
    Clear prompt sections for system instruction, context, and question.  
    → Leads to more consistent and traceable model responses.
-
----
-
-## How It Works
-
-1. **Load and preprocess document** (*George_Orwell_1984.pdf*)  
-2. **Semantic chunking** using NLTK sentence segmentation  
-3. **Embedding** via Hugging Face sentence transformer  
-4. **Vector search** using FAISS  
-5. **Question answering** with a locally running Llama 3.1 model through Ollama  
 
 ---
 
