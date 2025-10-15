@@ -1,8 +1,8 @@
 import os
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 # from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain_ollama import ChatOllama
 from langchain.schema import Document
@@ -14,6 +14,11 @@ try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
     nltk.download('punkt')
+
+try:
+    nltk.data.find('tokenizers/punkt_tab')
+except LookupError:
+    nltk.download('punkt_tab')
 
 ## Install Ollama locally:
 # https://ollama.com/download
@@ -77,10 +82,20 @@ qa_chain = RetrievalQA.from_chain_type(
     retriever=vectorstore.as_retriever()
 )
 
-query = "What is the Junior Anti-Sex League Orwell is writing about?"
-# query = "war is peace. freedom is slavery. What is ignorance? short answer."
 
-print("💭 Thinking... (retrieving context and generating answer, this may take a while)")
-response = qa_chain.invoke(query)
-print("✅ Done!\n")
-print(response)
+def answer_query(query: str):
+    """
+    Runs the RAG pipeline on a given query and returns the model's answer.
+    """
+    print("💭 Thinking... (retrieving context and generating answer, this may take a while)")
+    response = qa_chain.invoke(query)
+    print("✅ Done!\n")
+    return response
+
+
+# Run only when executed directly (not when imported)
+if __name__ == "__main__":
+    query = "What is the Junior Anti-Sex League Orwell is writing about?"
+    answer = answer_query(query)
+    print(answer)
+
