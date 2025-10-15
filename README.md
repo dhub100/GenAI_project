@@ -45,7 +45,7 @@ pip install langchain langchain-community langchain-ollama faiss-cpu sentence-tr
 Run the script:
 
 ```bash
-python Advanced_RAG_semantic_chunk.py
+python advanced_rag.py
 ```
 
 The script will:

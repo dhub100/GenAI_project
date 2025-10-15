@@ -47,9 +47,13 @@ def semantic_chunk_text(text, target_length=800, overlap_sentences=2):
 # Use free Hugging Face embeddings
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
+
 faiss_path = "FAISS_db_Orwell/RAG"
 
-if os.path.exists(faiss_path):
+# --- Control whether to rebuild the FAISS index ---
+rebuild_faiss = True  # set to True to force re-indexing (e.g., after changing chunking strategy)
+
+if os.path.exists(faiss_path) and not rebuild_faiss:
     vectorstore = FAISS.load_local(faiss_path, embeddings, allow_dangerous_deserialization=True)
 else:
     loader = PyPDFLoader("George_Orwell_1984.pdf")
@@ -73,7 +77,8 @@ qa_chain = RetrievalQA.from_chain_type(
     retriever=vectorstore.as_retriever()
 )
 
-query = "war is peace. freedom is slavery. What is ignorance? short answer."
+query = "What is the Junior Anti-Sex League Orwell is writing about?"
+# query = "war is peace. freedom is slavery. What is ignorance? short answer."
 
 print("💭 Thinking... (retrieving context and generating answer, this may take a while)")
 response = qa_chain.invoke(query)
