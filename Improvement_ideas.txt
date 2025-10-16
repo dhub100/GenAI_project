@@ -20,3 +20,20 @@ Regarding references to the document source, three steps are required:
 - Store metadata together with each chunk in the vector database.
 - Ensure the metadata is retrieved along with the text and passed to the LLM.
 - Add to the user prompt an instruction, e.g. “Include the document name and page number in parentheses.”
+
+Possible things to test and check how performance is affected:
+
+1. Use different embedders: e.g "nomic-embed-text" from ollama
+
+#from langchain_ollama import OllamaEmbeddings
+
+#embeddings = OllamaEmbeddings(model="nomic-embed-text")
+#vectorstore = FAISS.from_documents(texts, embeddings)
+
+2. Test other chain types than "stuff" => such as "map_reduce" (sends each junk separately to the llm then summarizes results)
+or "refine" (sends each junk individually to the llm)
+
+3. we could also play around with the numbers of chunks retrieved to see how the result is influenced:
+e.g retriever = vectorstore.as_retriever(search_kwargs={"k": 6}
+
+
