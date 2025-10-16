@@ -93,6 +93,39 @@ def expand_query(llm, original_query: str) -> tuple[str, list[str]]:
         return original_query, [original_query]  # fallback
 
 
+### Context compression function ###
+def compress_context(llm, retrieved_docs, query: str, max_sentences: int = 2):
+    """
+    Compresses retrieved chunks using the local LLM.
+    Summarizes each document briefly based on the given query.
+    """
+    print("\nCompressing retrieved context...")
+    compressed = []
+
+    for i, doc in enumerate(retrieved_docs, start=1):
+        text = doc.page_content.strip()
+        if not text:
+            continue
+
+        prompt = (
+            f"Summarize this text in {max_sentences} sentences, focusing only on information "
+            f"relevant to answering the following question:\n\n"
+            f"Question: {query}\n\n"
+            f"Text:\n{text}\n\n"
+            f"Summary:"
+        )
+
+        try:
+            summary = llm.invoke(prompt).content.strip()
+            compressed.append(summary)
+            print(f"  Chunk {i} compressed.")
+        except Exception as e:
+            print(f"  Chunk {i} compression failed: {e}")
+
+    print("Context compression complete.\n")
+    return compressed
+
+
 #### Embedding & Vectorstore setup ####
 
 
@@ -153,6 +186,14 @@ qa_chain = RetrievalQA.from_chain_type(
 # Query function
 
 def answer_query(query: str):
+    """
+    Runs the full RAG pipeline:
+    1. Expands the user's query.
+    2. Retrieves context from FAISS.
+    3. Compresses the retrieved context before passing it to the LLM.
+    4. Returns the final, concise answer.
+    """
+
     print("\nPreparing query expansion...")
     expanded_query, expanded_list = expand_query(llm, query)
 
@@ -160,20 +201,28 @@ def answer_query(query: str):
     for q in expanded_list:
         print(" -", q)
 
-    expanded_query = (
-            "Answer briefly (max 3 sentences) and only based on the retrieved context.\n\n"
-            + expanded_query
+    print("\nRetrieving relevant context...")
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
+    retrieved_docs = retriever.get_relevant_documents(expanded_query)
+    print(f"Retrieved {len(retrieved_docs)} documents.")
+
+    # --- Context Compression (your existing version) ---
+    compressed_contexts = compress_context(llm, retrieved_docs, query=expanded_query, max_sentences=2)
+
+    # Combine all compressed summaries into one text block
+    context_text = "\n".join(compressed_contexts)
+
+    # --- Final Combined Prompt ---
+    final_prompt = (
+        "Answer concisely (max 3 sentences) and only based on the context below.\n\n"
+        f"Context:\n{context_text}\n\nQuestion: {expanded_query}\nAnswer:"
     )
-    print("\nRetrieving context and generating answer...")
-    response = qa_chain.invoke(expanded_query)
-    print("Done!\n")
 
-    if isinstance(response, dict) and "result" in response:
-        final_answer = response["result"]
-    else:
-        final_answer = response
+    print("\nGenerating final answer...")
+    response = llm.invoke(final_prompt)
+    final_answer = response.content.strip() if hasattr(response, "content") else str(response)
 
-    print("Final Answer:\n", final_answer)
+    print("\nFinal Answer:\n", final_answer)
     return final_answer
 
 
