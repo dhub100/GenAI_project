@@ -25,13 +25,15 @@ class AdvancedRAG:
     def __init__(self, document_path: str = "George_Orwell_1984.pdf",
                  rebuild_faiss: bool = False,
                  embedding_model_type: EmbeddingModelType=EmbeddingModelType.HuggingFace,
-                 chain_type: ChainType = ChainType.REFINE):
+                 chain_type: ChainType = ChainType.REFINE,
+                 llm_temperature: float = 0.1):
 
         # defining constants
         self.document_path = document_path
         self.rebuild_faiss = rebuild_faiss
         self.embedding_model_type = embedding_model_type
         self.chain_type = chain_type
+        self.llm_temperature = llm_temperature
 
         # initial setup
         self.warnings_display()
@@ -102,7 +104,7 @@ class AdvancedRAG:
         Set up local LLM (Llama 3.1 model via Ollama)
         """
         print("Loading local Llama 3.1 model via Ollama...")
-        return ChatOllama(model="llama3.1:8b", temperature=0.1)
+        return ChatOllama(model="llama3.1:8b", temperature=self.llm_temperature)
 
     def setup_embeddings(self):
         """
