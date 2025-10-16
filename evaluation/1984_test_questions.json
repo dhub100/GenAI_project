@@ -1,0 +1,100 @@
+[
+  {
+    "Question":"What object does Winston buy in the antique shop, and why is it significant?",
+    "Answer":"He buys a glass paperweight with coral inside. It symbolizes his desire to connect with the past and his hope for a private, uncorrupted world.",
+    "Category":"Specific Fact",
+    "IsTrick":false,
+    "Difficulty":"Easy"
+  },
+  {
+    "Question":"Who delivers the message to Winston that 'we shall meet in the place where there is no darkness'?",
+    "Answer":"O'Brien says this to Winston, foreshadowing their eventual encounter in the Ministry of Love (a place of perpetual artificial light).",
+    "Category":"Specific Fact",
+    "IsTrick":false,
+    "Difficulty":"Medium"
+  },
+  {
+    "Question":"What phrase does Winston find written on a piece of paper Julia gives him?",
+    "Answer":"'I love you', which initiates their relationship.",
+    "Category":"Specific Fact",
+    "IsTrick":false,
+    "Difficulty":"Easy"
+  },
+  {
+    "Question":"How does the Party manipulate history throughout the novel?",
+    "Answer":"The Party constantly rewrites past records in the Ministry of Truth, altering documents, newspapers, and statistics so that history always matches current Party policy.",
+    "Category":"Ongoing Theme",
+    "IsTrick":false,
+    "Difficulty":"Medium"
+  },
+  {
+    "Question":"What role does Big Brother play in the society of 1984?",
+    "Answer":"Big Brother is the omnipresent figurehead used by the Party to enforce loyalty and fear. His image represents surveillance and absolute authority, whether or not he truly exists.",
+    "Category":"Ongoing Theme",
+    "IsTrick":false,
+    "Difficulty":"Medium"
+  },
+  {
+    "Question":"How is the concept of 'doublethink' shown across the novel?",
+    "Answer":"Doublethink is the ability to hold two contradictory beliefs at the same time, such as 'War is Peace' or 'Freedom is Slavery.' Winston experiences it both as a tool of survival and as a sign of the Party\u2019s control over thought.",
+    "Category":"Ongoing Theme",
+    "IsTrick":false,
+    "Difficulty":"Hard"
+  },
+  {
+    "Question":"Why does the Party seek to eliminate personal relationships like love and loyalty between individuals?",
+    "Answer":"Because the Party wants all loyalty directed solely toward Big Brother. Personal bonds create alternative sources of meaning and resistance, so they must be destroyed.",
+    "Category":"Interpretative",
+    "IsTrick":false,
+    "Difficulty":"Hard"
+  },
+  {
+    "Question":"What does the ending of the novel signify about Winston's transformation?",
+    "Answer":"At the end, Winston has been fully broken by torture and brainwashing. His love for Julia is replaced with love for Big Brother, symbolizing the Party's total power to control not just actions but thoughts and emotions.",
+    "Category":"Interpretative",
+    "IsTrick":false,
+    "Difficulty":"Hard"
+  },
+  {
+    "Question":"How does Newspeak serve as a tool of control beyond just simplifying language?",
+    "Answer":"By reducing vocabulary, Newspeak limits the ability to think critically or imagine rebellion. Without words for concepts like freedom or justice, people cannot even conceive of resisting the Party.",
+    "Category":"Interpretative",
+    "IsTrick":false,
+    "Difficulty":"Medium"
+  },
+  {
+    "Question":"Who is Winston's brother, and what happens to him in the novel?",
+    "Answer":"Trick! Winston never has a brother. The book only mentions his mother and sister.",
+    "Category":"Adversarial",
+    "IsTrick":true,
+    "Difficulty":"Medium"
+  },
+  {
+    "Question":"What does the Party slogan 'Knowledge is Power' mean in the context of 1984?",
+    "Answer":"Trick! That slogan never appears in the book. The real slogans are: 'War is Peace,' 'Freedom is Slavery,' 'Ignorance is Strength.'",
+    "Category":"Adversarial",
+    "IsTrick":true,
+    "Difficulty":"Medium"
+  },
+  {
+    "Question":"What is the name of the rebellion's secret base outside London?",
+    "Answer":"Trick! There is no secret base. The 'Brotherhood' may not even exist; O'Brien likely invents it as part of Winston\u2019s entrapment.",
+    "Category":"Adversarial",
+    "IsTrick":true,
+    "Difficulty":"Medium"
+  },
+  {
+    "Question":"In the Ministry of Love, what room is used for prisoner recreation?",
+    "Answer":"Trick! There is no recreation room. The famous place is Room 101, used for the worst torture, tailored to each prisoner\u2019s deepest fear.",
+    "Category":"Adversarial",
+    "IsTrick":true,
+    "Difficulty":"Medium"
+  },
+  {
+    "Question":"Who kills O'Brien at the end of the novel?",
+    "Answer":"Trick! O'Brien does not die. He survives and is instrumental in breaking Winston.",
+    "Category":"Adversarial",
+    "IsTrick":true,
+    "Difficulty":"Medium"
+  }
+]
