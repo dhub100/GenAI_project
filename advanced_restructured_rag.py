@@ -28,7 +28,7 @@ class AdvancedRAG:
         self.document_path = document_path
         self.faiss_path = faiss_path
         self.rebuild_faiss = rebuild_faiss
-        self.chain_type = chain_type
+        self.chain_type = chain_type.value
         self.hugging_face_embeddings_model_name = hugging_face_embeddings_model_name
 
         # initial setup
