@@ -10,6 +10,7 @@ from langchain.schema import Document
 # from dotenv import load_dotenv
 import nltk
 from nltk.tokenize import sent_tokenize
+#from sqlalchemy.testing.suite.test_reflection import metadata
 
 try:
     nltk.data.find('tokenizers/punkt')
@@ -39,7 +40,7 @@ print("The server must be active once per session before starting this script.\n
 
 
 ### Semantic chunking function ###
-def semantic_chunk_text(text, target_length=800, overlap_sentences=2):
+def semantic_chunk_text(text, page_number, target_length=800, overlap_sentences=2, ):
     """
     Split text into semantic chunks based on sentences.
     """
@@ -50,11 +51,13 @@ def semantic_chunk_text(text, target_length=800, overlap_sentences=2):
     for sentence in sentences:
         current_chunk.append(sentence)
         if len(" ".join(current_chunk)) > target_length:
-            chunks.append(" ".join(current_chunk))
+            chunk_text = " ".join(current_chunk)
+            chunks.append(Document(page_content=chunk_text, metadata={"page": page_number}))
             current_chunk = current_chunk[-overlap_sentences:]
 
     if current_chunk:
-        chunks.append(" ".join(current_chunk))
+        chunk_text = " ".join(current_chunk)
+        chunks.append(Document(page_content=chunk_text, metadata={"page": page_number}))
     return chunks
 
 
@@ -128,6 +131,26 @@ def compress_context(llm, retrieved_docs, query: str, max_sentences: int = 2):
     return compressed
 
 
+### Citation creation function
+
+def format_citation(doc):
+    md = getattr(doc, "metadata", {}) or {} #returns a dictionary with the metadata from the doc
+    page = md.get("page")
+    chunk_id = md.get("chunk_id")
+
+    #create a list of the parts of the citations
+    parts = []
+
+    if page is not None:
+        parts.append(f"p. {page}")
+
+    if chunk_id is not None:
+        parts.append(f"chunk {chunk_id}")
+
+    return " ".join(parts) if parts else "unknown"
+
+
+
 #### Embedding & Vectorstore setup ####
 
 
@@ -151,21 +174,27 @@ else:
     print("Creating new FAISS vector database from PDF...")
     loader = PyPDFLoader("George_Orwell_1984.pdf")
     documents = loader.load()
+
+    #create an empyt list called texts
+    texts = []
+
+    for i, doc in enumerate(documents, start=1):
+        page_num = doc.metadata.get("page",i)
+    # apply semantic chunking to each page
+        page_chunks = semantic_chunk_text(doc.page_content, page_number=page_num, target_length=800, overlap_sentences=2)
+
+
     #Combine all pages into a single string
-    full_text = " ".join([doc.page_content for doc in documents])
-    #Apply semantic chunking
-    semantic_chunks = semantic_chunk_text(full_text, target_length=800, overlap_sentences=2)
-    #Convert chunks to LangChain Document objects
-    texts = [
-        Document(
-            page_content=chunk,
-            metadata={
+    #full_text = " ".join([doc.page_content for doc in documents]) => put the texts list into the semantic_chunking function instead.
+        for j, chunk in enumerate(page_chunks, start=1):
+            chunk.metadata.update({
                 "source": "George_Orwell_1984.pdf",
-                "chunk_id": i + 1
-            }
-        )
-        for i, chunk in enumerate(semantic_chunks)
-    ]
+                "chunk_id": f"{page_num}-{j}"})
+
+        texts.extend(page_chunks)
+
+
+
     #Create FAISS vectorstore
     vectorstore = FAISS.from_documents(texts, embeddings)
     vectorstore.save_local(faiss_path)
@@ -225,9 +254,15 @@ def answer_query(query: str):
     print("\nGenerating final answer...")
     response = llm.invoke(final_prompt)
     final_answer = response.content.strip() if hasattr(response, "content") else str(response)
+    citations = sorted({format_citation(d) for d in retrieved_docs})
+
+    #add citations to the final answer
+    if citations:
+        final_answer += "\n\nSources: ".join(citations)
 
     print("\nFinal Answer:\n", final_answer)
     return final_answer
+
 
 
 # Run only when executed directly (not when imported)
