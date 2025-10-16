@@ -19,7 +19,7 @@ class ChainType(Enum):
 
 class AdvancedRAG:
     def __init__(self, document_path: str = "George_Orwell_1984.pdf",
-                 faiss_path: str = "FAISS_db_Orwell/RAG",
+                 faiss_path: str = "FAISS_db_Orwell/RAG",  # "FAISS_db_Orwell_nomic/RAG"
                  rebuild_faiss: bool = False,
                  chain_type: ChainType = ChainType.REFINE,
                  hugging_face_embeddings_model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
@@ -51,6 +51,8 @@ class AdvancedRAG:
 
         ## Start the server (bash)
         # ollama serve
+        # ollama pull llama3.1: 8b
+        # ollama pull nomic-embed-text
 
         print("Make sure the Ollama server is running (use 'ollama serve' in another terminal)\n.")
         print("The server must be active once per session before starting this script.\n")
@@ -99,6 +101,7 @@ class AdvancedRAG:
         Use free Hugging Face embeddings
         """
         print("Loading sentence-transformer embeddings...")
+        # return OllamaEmbeddings(model="nomic-embed-text")
         return HuggingFaceEmbeddings(model_name=self.hugging_face_embeddings_model_name)
 
     def setup_retrieval_chain(self):
@@ -263,6 +266,3 @@ class AdvancedRAG:
 if __name__ == "__main__":
     query = "What is the Junior Anti-Sex League Orwell is writing about?"
     final_answer = AdvancedRAG().answer_query(query)
-    print("\nFinal Answer (as string variable):")
-    print(final_answer)
-
