@@ -2,7 +2,7 @@ import os
 from langchain_community.document_loaders import PyPDFLoader
 # from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
-# from langchain_ollama import OllamaEmbeddings
+from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain_ollama import ChatOllama
@@ -17,23 +17,26 @@ class ChainType(Enum):
     REFINE = "refine"
     MAP_REDUCE = "map_reduce"
 
+class EmbeddingModelType(Enum):
+    Ollama  = "OllamaEmbedding"
+    HuggingFace = "HuggingFaceEmbedding"
+
 class AdvancedRAG:
     def __init__(self, document_path: str = "George_Orwell_1984.pdf",
-                 faiss_path: str = "FAISS_db_Orwell/RAG",  # "FAISS_db_Orwell_nomic/RAG"
                  rebuild_faiss: bool = False,
-                 chain_type: ChainType = ChainType.REFINE,
-                 hugging_face_embeddings_model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
+                 embedding_model_type: EmbeddingModelType=EmbeddingModelType.HuggingFace,
+                 chain_type: ChainType = ChainType.REFINE):
 
         # defining constants
         self.document_path = document_path
-        self.faiss_path = faiss_path
         self.rebuild_faiss = rebuild_faiss
-        self.chain_type = chain_type.value
-        self.hugging_face_embeddings_model_name = hugging_face_embeddings_model_name
+        self.embedding_model_type = embedding_model_type
+        self.chain_type = chain_type
 
         # initial setup
         self.warnings_display()
         self.setup_nltk()
+        self.faiss_path = self.get_FAISS_path()
         self.embeddings = self.setup_embeddings()
         self.vectorstore = self.setup_FAISS_indexing(rebuild_faiss=self.rebuild_faiss)
 
@@ -53,9 +56,14 @@ class AdvancedRAG:
         # ollama serve
         # ollama pull llama3.1: 8b
         # ollama pull nomic-embed-text
-
         print("Make sure the Ollama server is running (use 'ollama serve' in another terminal)\n.")
         print("The server must be active once per session before starting this script.\n")
+
+    def get_FAISS_path(self):
+        if self.embedding_model_type == EmbeddingModelType.Ollama:
+            return "FAISS_db_Orwell_nomic/RAG"
+        elif self.embedding_model_type == EmbeddingModelType.HuggingFace:
+             return "FAISS_db_Orwell/RAG"
 
     def setup_FAISS_indexing(self, rebuild_faiss: bool = False):
         # Control whether to rebuild the FAISS index ###
@@ -98,11 +106,13 @@ class AdvancedRAG:
 
     def setup_embeddings(self):
         """
-        Use free Hugging Face embeddings
+        Use embeddings
         """
         print("Loading sentence-transformer embeddings...")
-        # return OllamaEmbeddings(model="nomic-embed-text")
-        return HuggingFaceEmbeddings(model_name=self.hugging_face_embeddings_model_name)
+        if self.embedding_model_type == EmbeddingModelType.Ollama:
+            return OllamaEmbeddings(model="nomic-embed-text")
+        elif self.embedding_model_type == EmbeddingModelType.HuggingFace:
+            return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
     def setup_retrieval_chain(self):
         """
@@ -111,7 +121,7 @@ class AdvancedRAG:
         """
         return RetrievalQA.from_chain_type(
             llm=self.llm,
-            chain_type=self.chain_type,
+            chain_type=self.chain_type.value,
             retriever=self.vectorstore.as_retriever()
             )
 
@@ -265,4 +275,6 @@ class AdvancedRAG:
 # Run only when executed directly (not when imported)
 if __name__ == "__main__":
     query = "What is the Junior Anti-Sex League Orwell is writing about?"
-    final_answer = AdvancedRAG().answer_query(query)
+    final_answer = AdvancedRAG(
+        embedding_model_type=EmbeddingModelType.Ollama
+    ).answer_query(query)
