@@ -2,6 +2,7 @@ import os
 from langchain_community.document_loaders import PyPDFLoader
 # from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
+# from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain_ollama import ChatOllama
@@ -28,6 +29,7 @@ print("The server must be active once per session before starting this script.\n
 
 ## Pull the model (bash)
 # ollama pull llama3.1:8b
+# ollama pull nomic-embed-text
 
 ## Start the server (bash)
 # ollama serve
@@ -132,11 +134,12 @@ def compress_context(llm, retrieved_docs, query: str, max_sentences: int = 2):
 ### Use free Hugging Face embeddings ###
 print("Loading sentence-transformer embeddings...")
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-
+# embeddings = OllamaEmbeddings(model="nomic-embed-text")
 
 ### building FAISS index ###
 
 faiss_path = "FAISS_db_Orwell/RAG"
+## faiss_path = "FAISS_db_Orwell_nomic/RAG"
 
 # Control whether to rebuild the FAISS index ###
 rebuild_faiss = False  # set to True to force re-indexing (e.g., after changing chunking strategy)
@@ -175,9 +178,10 @@ else:
 print("Loading local Llama 3.1 model via Ollama...")
 llm = ChatOllama(model="llama3.1:8b", temperature=0.1)
 
+# Different chain types: stuff, refine, map_reduce
 qa_chain = RetrievalQA.from_chain_type(
     llm=llm,
-    chain_type="stuff",
+    chain_type="refine",
     retriever=vectorstore.as_retriever()
 )
 
@@ -203,7 +207,7 @@ def answer_query(query: str):
 
     print("\nRetrieving relevant context...")
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
-    retrieved_docs = retriever.get_relevant_documents(expanded_query)
+    retrieved_docs = retriever.invoke(expanded_query)
     print(f"Retrieved {len(retrieved_docs)} documents.")
 
     # --- Context Compression (your existing version) ---
@@ -230,6 +234,4 @@ def answer_query(query: str):
 if __name__ == "__main__":
     query = "What is the Junior Anti-Sex League Orwell is writing about?"
     final_answer = answer_query(query)
-    print("\nFinal Answer (as string variable):")
-    print(final_answer)
 
