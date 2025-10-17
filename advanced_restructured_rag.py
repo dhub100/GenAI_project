@@ -12,6 +12,9 @@ import nltk
 from nltk.tokenize import sent_tokenize
 from enum import Enum
 
+default_prompt = ("Answer concisely (max 3 sentences) and only based on the context below.\n\n"
+                  "Context:\n{context_text}\n\nQuestion: {final_form_query}\nAnswer:")
+
 class ChainType(Enum):
     STUFF = "stuff"
     REFINE = "refine"
@@ -26,6 +29,7 @@ class AdvancedRAG:
                  rebuild_faiss: bool = False,
                  embedding_model_type: EmbeddingModelType=EmbeddingModelType.HuggingFace,
                  chain_type: ChainType = ChainType.REFINE,
+                 prompt: str = default_prompt,
                  compression: bool = True,
                  nb_chunks: int = 5,
                  llm_temperature: float = 0.1):
@@ -35,6 +39,7 @@ class AdvancedRAG:
         self.rebuild_faiss = rebuild_faiss
         self.embedding_model_type = embedding_model_type
         self.chain_type = chain_type
+        self.prompt = prompt
         self.compression = compression
         self.nb_chunks = nb_chunks
         self.llm_temperature = llm_temperature
@@ -269,7 +274,6 @@ class AdvancedRAG:
         3. Compresses the retrieved context before passing it to the LLM.
         4. Returns the final, concise answer.
         """
-
         print("\nPreparing query expansion...")
         expanded_query, expanded_list = self.expand_query(query)
 
@@ -284,16 +288,14 @@ class AdvancedRAG:
 
         # --- Context Compression (your existing version) ---
         if self.compression:
-            retrieved_docs = self.compress_context(retrieved_docs, query=expanded_query, max_sentences=2)
-
-        # Combine all compressed summaries into one text block
-        context_text = "\n".join(retrieved_docs)
+            compressed_docs = self.compress_context(retrieved_docs, query=expanded_query, max_sentences=2)
+            # Combine all compressed summaries into one text block
+            context_text = "\n".join(compressed_docs)
+        else:
+            context_text = "\n".join([doc.page_content.strip() for doc in retrieved_docs])
 
         # --- Final Combined Prompt ---
-        final_prompt = (
-            "Answer concisely (max 3 sentences) and only based on the context below.\n\n"
-            f"Context:\n{context_text}\n\nQuestion: {expanded_query}\nAnswer:"
-        )
+        final_prompt = self.prompt.replace("{context_text}", context_text).replace("{final_form_query}", expanded_query)
 
         print("\nGenerating final answer...")
         response = self.llm.invoke(final_prompt)
@@ -302,7 +304,8 @@ class AdvancedRAG:
 
         # add citations to the final answer
         if citations:
-            final_answer += "\n\nSources: ".join(citations)
+            final_answer += "\n\nSources: \n - "
+            final_answer += "\n - ".join(citations)
         print("\nFinal Answer:\n", final_answer)
         return final_answer
 
@@ -311,5 +314,7 @@ class AdvancedRAG:
 if __name__ == "__main__":
     query = "What is the Junior Anti-Sex League Orwell is writing about?"
     final_answer = AdvancedRAG(
-        embedding_model_type=EmbeddingModelType.HuggingFace
+        embedding_model_type=EmbeddingModelType.HuggingFace,
+        compression=False,
+        nb_chunks=3
     ).answer_query(query)
