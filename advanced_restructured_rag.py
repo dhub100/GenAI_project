@@ -78,21 +78,24 @@ class AdvancedRAG:
             print("Creating new FAISS vector database from PDF...")
             loader = PyPDFLoader(self.document_path)
             documents = loader.load()
-            # Combine all pages into a single string
-            full_text = " ".join([doc.page_content for doc in documents])
-            # Apply semantic chunking
-            semantic_chunks = self.semantic_chunk_text(full_text, target_length=800, overlap_sentences=2)
-            # Convert chunks to LangChain Document objects
-            texts = [
-                Document(
-                    page_content=chunk,
-                    metadata={
+
+            texts = []
+            for i, doc in enumerate(documents, start=1):
+                page_num = doc.metadata.get("page", i)
+                # apply semantic chunking to each page
+                page_chunks = self.semantic_chunk_text(doc.page_content, page_number=page_num, target_length=800,
+                                                  overlap_sentences=2)
+
+                # Combine all pages into a single string
+                # full_text = " ".join([doc.page_content for doc in documents])
+                    # => put the texts list into the semantic_chunking function instead.
+                for j, chunk in enumerate(page_chunks, start=1):
+                    chunk.metadata.update({
                         "source": self.document_path,
-                        "chunk_id": i + 1
-                    }
-                )
-                for i, chunk in enumerate(semantic_chunks)
-            ]
+                        "chunk_id": f"{page_num}-{j}"})
+
+                texts.extend(page_chunks)
+
             # Create FAISS vectorstore
             vectorstore = FAISS.from_documents(texts, self.embeddings)
             vectorstore.save_local(self.faiss_path)
@@ -141,7 +144,26 @@ class AdvancedRAG:
         except LookupError:
             nltk.download('punkt_tab')
 
-    def semantic_chunk_text(self, text, target_length=800, overlap_sentences=2):
+    def format_citation(self, doc):
+        """
+        Returns a dictionary with the metadata from the doc
+        """
+        md = getattr(doc, "metadata", {}) or {}
+        page = md.get("page")
+        chunk_id = md.get("chunk_id")
+
+        # create a list of the parts of the citations
+        parts = []
+
+        if page is not None:
+            parts.append(f"p. {page}")
+
+        if chunk_id is not None:
+            parts.append(f"chunk {chunk_id}")
+
+        return " ".join(parts) if parts else "unknown"
+
+    def semantic_chunk_text(self, text, page_number, target_length=800, overlap_sentences=2):
         """
         Split text into semantic chunks based on sentences.
         """
@@ -152,11 +174,13 @@ class AdvancedRAG:
         for sentence in sentences:
             current_chunk.append(sentence)
             if len(" ".join(current_chunk)) > target_length:
-                chunks.append(" ".join(current_chunk))
+                chunk_text = " ".join(current_chunk)
+                chunks.append(Document(page_content=chunk_text, metadata={"page": page_number}))
                 current_chunk = current_chunk[-overlap_sentences:]
 
         if current_chunk:
-            chunks.append(" ".join(current_chunk))
+            chunk_text = " ".join(current_chunk)
+            chunks.append(Document(page_content=chunk_text, metadata={"page": page_number}))
         return chunks
 
     def compress_context(self, retrieved_docs, query: str, max_sentences: int = 2):
@@ -233,7 +257,7 @@ class AdvancedRAG:
             final_answer = answer
         return final_answer
 
-    def answer_query(self, query: str):
+    def answer_query(self, query: str) -> tuple[str, list[str]]:
         """
         Runs the full RAG pipeline:
         1. Expands the user's query.
@@ -269,7 +293,11 @@ class AdvancedRAG:
         print("\nGenerating final answer...")
         response = self.llm.invoke(final_prompt)
         final_answer = response.content.strip() if hasattr(response, "content") else str(response)
+        citations = sorted({self.format_citation(d) for d in retrieved_docs})
 
+        # add citations to the final answer
+        if citations:
+            final_answer += "\n\nSources: ".join(citations)
         print("\nFinal Answer:\n", final_answer)
         return final_answer
 
@@ -278,5 +306,5 @@ class AdvancedRAG:
 if __name__ == "__main__":
     query = "What is the Junior Anti-Sex League Orwell is writing about?"
     final_answer = AdvancedRAG(
-        embedding_model_type=EmbeddingModelType.Ollama
+        embedding_model_type=EmbeddingModelType.HuggingFace
     ).answer_query(query)
