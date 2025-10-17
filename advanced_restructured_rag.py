@@ -26,6 +26,7 @@ class AdvancedRAG:
                  rebuild_faiss: bool = False,
                  embedding_model_type: EmbeddingModelType=EmbeddingModelType.HuggingFace,
                  chain_type: ChainType = ChainType.REFINE,
+                 compression: bool = True,
                  llm_temperature: float = 0.1):
 
         # defining constants
@@ -33,6 +34,7 @@ class AdvancedRAG:
         self.rebuild_faiss = rebuild_faiss
         self.embedding_model_type = embedding_model_type
         self.chain_type = chain_type
+        self.compression = compression
         self.llm_temperature = llm_temperature
 
         # initial setup
@@ -279,10 +281,11 @@ class AdvancedRAG:
         print(f"Retrieved {len(retrieved_docs)} documents.")
 
         # --- Context Compression (your existing version) ---
-        compressed_contexts = self.compress_context(retrieved_docs, query=expanded_query, max_sentences=2)
+        if self.compression:
+            retrieved_docs = self.compress_context(retrieved_docs, query=expanded_query, max_sentences=2)
 
         # Combine all compressed summaries into one text block
-        context_text = "\n".join(compressed_contexts)
+        context_text = "\n".join(retrieved_docs)
 
         # --- Final Combined Prompt ---
         final_prompt = (
