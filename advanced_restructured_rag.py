@@ -27,6 +27,7 @@ class AdvancedRAG:
                  embedding_model_type: EmbeddingModelType=EmbeddingModelType.HuggingFace,
                  chain_type: ChainType = ChainType.REFINE,
                  compression: bool = True,
+                 nb_chunks: int = 5,
                  llm_temperature: float = 0.1):
 
         # defining constants
@@ -35,6 +36,7 @@ class AdvancedRAG:
         self.embedding_model_type = embedding_model_type
         self.chain_type = chain_type
         self.compression = compression
+        self.nb_chunks = nb_chunks
         self.llm_temperature = llm_temperature
 
         # initial setup
@@ -276,7 +278,7 @@ class AdvancedRAG:
             print(" -", q)
 
         print("\nRetrieving relevant context...")
-        retriever = self.vectorstore.as_retriever(search_kwargs={"k": 5})
+        retriever = self.vectorstore.as_retriever(search_kwargs={"k": self.nb_chunks})
         retrieved_docs = retriever.invoke(expanded_query)
         print(f"Retrieved {len(retrieved_docs)} documents.")
 
