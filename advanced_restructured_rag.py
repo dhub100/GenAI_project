@@ -158,11 +158,15 @@ class AdvancedRAG:
         Returns a dictionary with the metadata from the doc
         """
         md = getattr(doc, "metadata", {}) or {}
+        book_name = md.get("source").split(".pdf")[0].replace("_", " ")
         page = md.get("page")
         chunk_id = md.get("chunk_id")
 
         # create a list of the parts of the citations
         parts = []
+
+        if book_name is not None:
+            parts.append(f"book {book_name}")
 
         if page is not None:
             parts.append(f"p. {page}")
