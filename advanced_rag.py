@@ -12,8 +12,73 @@ import nltk
 from nltk.tokenize import sent_tokenize
 from enum import Enum
 
-default_prompt = ("Answer concisely (max 3 sentences) and only based on the context below.\n\n"
-                  "Context:\n{context_text}\n\nQuestion: {final_form_query}\nAnswer:")
+# --- Structured Prompt Presets ---
+PROMPT_PRESETS = {
+    "default": (
+        "Answer concisely (maximum 3 sentences) and only based on the context below.\n\n"
+        "Context:\n{context_text}\n\nQuestion:\n{final_form_query}\n\nAnswer:"
+    ),
+
+    "academic": (
+        "[SYSTEM]\n"
+        "You are an academic literature analyst and researcher.\n"
+        "You interpret texts through a scholarly lens, connecting them to historical, social, and philosophical contexts.\n\n"
+        "[CONTEXT]\n"
+        "{context_text}\n\n"
+        "[QUESTION]\n"
+        "{final_form_query}\n\n"
+        "[INSTRUCTIONS]\n"
+        "Provide a short, objective, and academic interpretation. "
+        "Include relevant historical or ideological connections where appropriate. "
+        "Limit your answer to a maximum of 3 sentences.\n\n"
+        "[ANSWER]:"
+    ),
+
+    "debate": (
+        "[SYSTEM]\n"
+        "You are a critical thinker participating in a philosophical debate.\n"
+        "You challenge assumptions and highlight contradictions in the author's ideas.\n\n"
+        "[CONTEXT]\n"
+        "{context_text}\n\n"
+        "[QUESTION]\n"
+        "{final_form_query}\n\n"
+        "[INSTRUCTIONS]\n"
+        "Present a concise argument that questions or critiques the author’s stance. "
+        "Use one example or quote from the context if relevant. "
+        "Answer in a maximum of 3 sentences.\n\n"
+        "[ANSWER]:"
+    ),
+
+    "psychology": (
+        "[SYSTEM]\n"
+        "You are a psychologist analyzing emotional and behavioral aspects of fictional characters.\n"
+        "Focus on motivations, fears, and emotional mechanisms.\n\n"
+        "[CONTEXT]\n"
+        "{context_text}\n\n"
+        "[QUESTION]\n"
+        "{final_form_query}\n\n"
+        "[INSTRUCTIONS]\n"
+        "Describe how the characters’ actions or organizations reflect psychological manipulation, repression, or fear. "
+        "Keep it interpretative, not purely descriptive. "
+        "Answer in a maximum of 3 sentences.\n\n"
+        "[ANSWER]:"
+    ),
+
+    "historical": (
+        "[SYSTEM]\n"
+        "You are a historical and political science expert analyzing literature.\n"
+        "Focus on political ideology and societal aspects reflected in the text.\n\n"
+        "[CONTEXT]\n"
+        "{context_text}\n\n"
+        "[QUESTION]\n"
+        "{final_form_query}\n\n"
+        "[INSTRUCTIONS]\n"
+        "Explain the political and social implications concisely and analytically. "
+        "Answer in a maximum of 3 sentences.\n\n"
+        "[ANSWER]:"
+    ),
+}
+
 
 class ChainType(Enum):
     STUFF = "stuff"
@@ -29,10 +94,11 @@ class AdvancedRAG:
                  rebuild_faiss: bool = False,
                  embedding_model_type: EmbeddingModelType=EmbeddingModelType.HuggingFace,
                  chain_type: ChainType = ChainType.REFINE,
-                 prompt: str = default_prompt,
+                 prompt: str = PROMPT_PRESETS["default"],
                  compression: bool = True,
                  nb_chunks: int = 5,
-                 llm_temperature: float = 0.1):
+                 llm_temperature: float = 0.1,
+                 role_name: str = "default"):
 
         # defining constants
         self.document_path = document_path
@@ -43,6 +109,7 @@ class AdvancedRAG:
         self.compression = compression
         self.nb_chunks = nb_chunks
         self.llm_temperature = llm_temperature
+        self.role_name = role_name
 
         # initial setup
         self.warnings_display()
@@ -311,14 +378,22 @@ class AdvancedRAG:
             final_answer += "\n\nSources: \n - "
             final_answer += "\n - ".join(citations)
         print("\nFinal Answer:\n", final_answer)
+        print(f"Role used: {self.role_name}\n")
         return final_answer
 
 
 # Run only when executed directly (not when imported)
 if __name__ == "__main__":
     query = "What is the Junior Anti-Sex League Orwell is writing about?"
+
+    # Choose a structured prompt from PROMPT_PRESETS
+    role_name = "debate"
+    selected_prompt = PROMPT_PRESETS[role_name]
+
     final_answer = AdvancedRAG(
         embedding_model_type=EmbeddingModelType.HuggingFace,
         compression=True,
-        nb_chunks=2
+        nb_chunks=2,
+        prompt=selected_prompt,
+        role_name=role_name
     ).answer_query(query)
