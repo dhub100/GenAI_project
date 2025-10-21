@@ -61,7 +61,11 @@ def answer_query(query: str):
     print("💭 Thinking... (retrieving context and generating answer, this may take a while)")
     response = qa_chain.invoke(query)
     print("✅ Done!\n")
-    return response
+    if isinstance(response, dict) and "result" in response:
+        final_answer = response["result"]
+    else:
+        final_answer = response
+    return final_answer
 
 
 # Run only when executed directly (not when imported)

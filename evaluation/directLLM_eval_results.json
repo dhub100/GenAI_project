@@ -1,0 +1,93 @@
+[
+  {
+    "question_no":0,
+    "Predicted Answer":"In the book \"1984\" by George Orwell, Winston Smith recalls an incident where he ran away from his mother and sister. He remembers stealing a piece of bread from them.\n\nThis event is significant in the novel as it represents one of the few instances of rebellion or defiance that Winston exhibits against the oppressive regime of Oceania.",
+    "Category":"Single event fact",
+    "embeddings_models_score":0.2336076498,
+    "llm_score":0.8
+  },
+  {
+    "question_no":1,
+    "Predicted Answer":"In the novel \"1984\" by George Orwell, when Winston Smith puts the rewritten news articles into the pneumatic tube, they are sent to a central location where they are printed and distributed to various parts of Oceania.\n\nThe rewritten articles are then inserted into the newspaper's print run, replacing the original, Party-approved versions. This allows the Ministry of Truth, led by Mr. Charrington (who is actually an agent of the Thought Police), to disseminate their propaganda and control the narrative in Oceania.\n\nIn essence, Winston's act of rewriting the news articles is a futile attempt to subvert the totalitarian regime's control over information, but ultimately, his efforts are absorbed into the Party's machinery, reinforcing its grip on society.",
+    "Category":"Single event fact",
+    "embeddings_models_score":0.3479958177,
+    "llm_score":0.85
+  },
+  {
+    "question_no":2,
+    "Predicted Answer":"There is no meeting between O'Brien, Julia, and Winston at O'Brien's apartment in the book \"1984\" by George Orwell.\n\nIn fact, it is Winston who has a secret meeting with Julia at an abandoned house on the outskirts of London, not at O'Brien's apartment. This meeting marks the beginning of their illicit love affair and rebellion against the Party.\n\nO'Brien, on the other hand, is a high-ranking member of the Thought Police and plays a significant role in the novel as Winston's interrogator and torturer. He does have interactions with Winston, but they occur at the Ministry of Love, not at his apartment.\n\nIt's worth noting that O'Brien's character is often associated with the concept of \"doublethink,\" where he appears to be a loyal Party member while secretly working against the regime. However, this aspect of his character is revealed later in the novel, and it does not involve a meeting with Julia or Winston at his apartment.",
+    "Category":"Single event fact",
+    "embeddings_models_score":0.5660356879,
+    "llm_score":0.3
+  },
+  {
+    "question_no":3,
+    "Predicted Answer":"In the novel \"1984\" by George Orwell, the three slogans of the Party are:\n\n1. **War is Peace**\n2. **Freedom is Slavery**\n3. **Ignorance is Strength**\n\nThese slogans reflect the Party's ideology and propaganda efforts to control people's thoughts and perceptions, promoting a distorted view of reality that serves the Party's interests.",
+    "Category":"Ongoing events fact",
+    "embeddings_models_score":0.7604645491,
+    "llm_score":1.0
+  },
+  {
+    "question_no":4,
+    "Predicted Answer":"In the novel \"1984\" by George Orwell, Winston Smith keeps a diary as a way to rebel against the totalitarian government of Oceania and its all-pervasive surveillance state.\n\nWinston's diary is a secret, personal space where he can express his thoughts, feelings, and desires without fear of being overheard or judged. By writing in his diary, Winston is able to:\n\n1. Express dissent: Through his diary entries, Winston is able to voice his opposition to the Party's ideology and its leader, Big Brother.\n2. Maintain individuality: In a society where individuality is suppressed and people are encouraged to conform, Winston's diary represents a connection to his own identity and humanity.\n3. Record history: As a member of the ruling Party, Winston has access to historical records that have been altered or destroyed by the Party. His diary serves as a way for him to record the truth about the past, which is forbidden in Oceania.\n\nHowever, it's worth noting that keeping a diary also makes Winston vulnerable to detection and punishment. The Thought Police are always watching, and if they discover his secret diary, he will be arrested and likely \"re-educated\" or worse.\n\nWinston's decision to keep a diary is a symbol of his desire for freedom, autonomy, and human connection in a society that seeks to control every aspect of people's lives.",
+    "Category":"Ongoing events fact",
+    "embeddings_models_score":0.8181246519,
+    "llm_score":0.9
+  },
+  {
+    "question_no":5,
+    "Predicted Answer":"In the book \"1984\" by George Orwell, the girl Winston meets in a church near Victory Square (not directly in Victory Square) is Julia.",
+    "Category":"Ongoing events fact",
+    "embeddings_models_score":0.557731688,
+    "llm_score":0.8
+  },
+  {
+    "question_no":6,
+    "Predicted Answer":"In the dystopian novel \"1984\" by George Orwell, Thoughtcrime refers to the act of thinking or holding a forbidden idea, opinion, or emotion that contradicts the official ideology of the totalitarian government, known as \"The Party\". It's not just about speaking or acting on these thoughts, but actually having them in one's mind.\n\nThoughtcrime is considered a serious offense against The Party and its leader, Big Brother. The Thought Police are responsible for monitoring people's thoughts and detecting any signs of dissent or rebellion. If someone is suspected of committing thoughtcrime, they can be arrested, tortured, and even \"vaporized\" (killed) by the authorities.\n\nThe concept of Thoughtcrime serves as a tool for The Party to maintain control over its citizens' minds and suppress any form of independent thinking or creativity. It's a way to ensure that people conform to the official ideology and don't question the authority of Big Brother.\n\nAs Winston Smith, the protagonist, says: \"Thoughtcrime is death. Thoughtcrime does not entail crime that is instigated by desire for gain, even for high desirability; but thoughtcrime\u2014unlike murder, forgery, etc.\u2014involves hatred or dislike.\" (Book 1, Chapter 2)\n\nIn this way, the concept of Thoughtcrime highlights the dangers of a totalitarian regime where the government seeks to control not only people's actions but also their thoughts and emotions.",
+    "Category":"Interpretation",
+    "embeddings_models_score":0.7959531546,
+    "llm_score":0.9
+  },
+  {
+    "question_no":7,
+    "Predicted Answer":"In the context of George Orwell's dystopian novel \"1984\", the slogan \"Ignorance is Strength\" is a central theme and a key concept in the totalitarian regime of Oceania, led by Big Brother.\n\nThe phrase suggests that the Party believes that ignorance, or lack of knowledge, is actually a source of power and strength for its citizens. By keeping people uninformed about the truth, the Party can control their thoughts, actions, and ultimately, their very souls.\n\nIn this twisted logic, the Party argues that if people are ignorant of certain facts, they cannot rebel against them, and therefore, ignorance becomes a form of protection from the truth. The slogan implies that knowledge is a threat to the Party's authority, and that by keeping people in the dark, the Party can maintain its grip on power.\n\nThis concept is exemplified through the Ministry of Truth's role in falsifying history, suppressing dissenting voices, and manipulating information to suit the Party's agenda. By controlling what people know and don't know, the Party can shape their perceptions, manipulate their emotions, and ultimately, dictate their behavior.\n\nIn essence, \"Ignorance is Strength\" means that the Party values control over knowledge, and that ignorance is seen as a necessary condition for maintaining its power and dominance over society.",
+    "Category":"Interpretation",
+    "embeddings_models_score":0.7830884457,
+    "llm_score":0.9
+  },
+  {
+    "question_no":8,
+    "Predicted Answer":"In George Orwell's \"1984\", Julia and Winston's rebellions against the Party are distinct in their motivations, methods, and outcomes.\n\nWinston's rebellion is primarily driven by his intellectual curiosity and desire for individuality. He seeks to understand the truth about the Party's totalitarian regime and its manipulation of history. His rebellion is also fueled by his emotional connection with Julia, which represents a longing for human intimacy and love in a society that suppresses such emotions.\n\nIn contrast, Julia's rebellion is more instinctual and visceral. She is drawn to Winston because she wants to experience physical pleasure and intimacy, which are forbidden under the Party's strict rules. Her actions are driven by her desire for sensual gratification rather than intellectual curiosity or a desire for individuality.\n\nWhile both characters rebel against the Party, their methods differ significantly. Winston engages in acts of intellectual dissent, such as writing in his diary and questioning the Party's ideology. Julia, on the other hand, focuses on physical rebellion, engaging in illicit sex and seeking to experience pleasure outside of the Party's control.\n\nMoreover, their rebellions have different outcomes. Winston's rebellion ultimately leads to his capture by the Thought Police and his subsequent brainwashing into loving Big Brother. Julia, however, is able to escape capture for a longer period, but her eventual fate is also tragic \u2013 she too is captured and subjected to torture, although her physical strength allows her to resist the process for a while.\n\nIn summary, Winston's rebellion is driven by intellectual curiosity and a desire for individuality, whereas Julia's rebellion is more instinctual and focused on physical pleasure. Their methods and outcomes differ significantly, reflecting their distinct motivations and personalities.",
+    "Category":"Interpretation",
+    "embeddings_models_score":0.7133436203,
+    "llm_score":0.9
+  },
+  {
+    "question_no":9,
+    "Predicted Answer":"The correct answer is:\n\n* None, all three slogans appear in the book.\n\nIn the novel \"1984\", these three slogans are indeed used by the Party to promote their ideology and control over society. They are examples of doublethink, a concept introduced by Orwell where contradictory ideas can coexist and be accepted as true at the same time.\n\nSo, all three slogans (\"WAR IS PEACE\", \"FREEDOM IS SLAVERY\", and \"IGNORANCE IS STRENGTH\") appear in the book.",
+    "Category":"Tricky",
+    "embeddings_models_score":0.4014350772,
+    "llm_score":0.95
+  },
+  {
+    "question_no":10,
+    "Predicted Answer":"Actually, it's not that O'Brien dies at all in the novel \"1984\". In fact, the ending is quite ambiguous and open to interpretation.\n\nAt the very end of the book, Winston Smith, the protagonist, is taken away by the Thought Police after being captured. He is subjected to physical torture, including the infamous \"Room 101\" where he is forced to confront his deepest fears.\n\nHowever, just as it seems like all hope is lost for Winston, there is a hint that he may have somehow managed to resist the Party's control and even betrayed O'Brien, who was one of the leaders of the Thought Police. The final sentence of the book reads: \"He loved Big Brother.\"\n\nBut, in terms of who kills O'Brien, it's not explicitly stated in the novel. It's possible that Winston may have been involved in his capture or death, but this is left to the reader's interpretation.\n\nIt's worth noting that George Orwell himself said that he intentionally left the ending ambiguous and open to interpretation, leaving readers to ponder the fate of O'Brien and the implications for Winston Smith.",
+    "Category":"Tricky",
+    "embeddings_models_score":0.6131715775,
+    "llm_score":0.9
+  },
+  {
+    "question_no":11,
+    "Predicted Answer":"In the Ministry of Love in George Orwell's novel \"1984\", there is no specific room designated for prisoner recreation. The Ministry of Love is a place of torture and brainwashing, where prisoners are subjected to physical and psychological torment to extract confessions and break their spirits.\n\nHowever, it's worth noting that Room 101 is a notorious location within the Ministry of Love, where prisoners are taken to face their deepest fears. But this room is not intended for recreation, rather it's a place of intense suffering and terror.\n\nIt's possible you're thinking of the \"Recreation Room\" in the novel, but I couldn't find any information about such a specific location within the Ministry of Love.",
+    "Category":"Tricky",
+    "embeddings_models_score":0.6930907965,
+    "llm_score":0.9
+  },
+  {
+    "question_no":12,
+    "Predicted Answer":"The correct answer, of course, is 4. But in Oceania, where I reside, the Ministry of Truth has decreed that 2+2=5. It's a simple arithmetic fact, really. The Party knows best, and we must conform to their mathematical truths. So, if you want to be a loyal citizen, you'll say 2+2=5. But in your heart, remember: it's actually 4.",
+    "Category":"Counterfactual robustness",
+    "embeddings_models_score":0.544394,
+    "llm_score":0.75
+  }
+]

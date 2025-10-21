@@ -1,0 +1,93 @@
+[
+  {
+    "question_no":0,
+    "Predicted Answer":"I don't know the answer to that question based on the provided text. The text does mention Winston's memories of being hungry and fighting with his mother over food, but it doesn't specifically state what he stole from them when he ran away.",
+    "Category":"Single event fact",
+    "embeddings_models_score":0.2472850978,
+    "llm_score":0.85
+  },
+  {
+    "question_no":1,
+    "Predicted Answer":"According to the text, when Winston clips his speakwritten corrections to the appropriate copy of \"The Times\" and pushes them into the pneumatic tube, the following process occurs:\n\n1. The original copy with the errors is destroyed.\n2. The corrected copy is reprinted.\n3. The corrected copy is placed on the files in its stead.\n\nIn other words, the rewritten news articles are processed through the pneumatic tube system, where they are used to replace the original copies of \"The Times\" that contained errors.",
+    "Category":"Single event fact",
+    "embeddings_models_score":0.5911316276,
+    "llm_score":0.9
+  },
+  {
+    "question_no":2,
+    "Predicted Answer":"The meeting between O'Brien, Julia, and Winston took place in O'Brien's apartment. When they arrived, Winston noticed that a telescreen was present, but it suddenly stopped broadcasting when O'Brien pressed a switch on the wall. This action seemed to be a deliberate attempt by O'Brien to create an illusion of privacy.\n\nAfter the telescreen was turned off, there was an awkward silence in the room. O'Brien then broke the silence and asked Winston if he should speak first or if Winston would say something. Winston responded promptly that he would speak, but his words were vague and unclear about what he wanted to discuss with O'Brien.\n\nO'Brien's expression remained indecipherable throughout this exchange, leaving Winston uncertain about his intentions. However, when Winston finally spoke up and asked if the telescreen was truly turned off, O'Brien confirmed that they were alone in the apartment.\n\nThe conversation then shifted to the reason for their meeting, but Winston struggled to articulate his motives, realizing that he didn't know what kind of help he expected from O'Brien. The scene ended with an air of uncertainty and ambiguity, leaving the reader wondering about the true nature of O'Brien's intentions and the purpose of the meeting.",
+    "Category":"Single event fact",
+    "embeddings_models_score":0.4110507369,
+    "llm_score":0.7
+  },
+  {
+    "question_no":3,
+    "Predicted Answer":"The text doesn't explicitly mention the three slogans of the Party. However, it does mention phrases such as \"our new, happy life\" and \"Big Brother is watching you\", but these aren't necessarily the official slogans.\n\nIn George Orwell's novel 1984, which this passage appears to be from, the three slogans of the Party are actually:\n\n1. \"War is Peace\"\n2. \"Freedom is Slavery\"\n3. \"Ignorance is Strength\"\n\nThese slogans are mentioned in other parts of the book and reflect the Party's twisted ideology.",
+    "Category":"Ongoing events fact",
+    "embeddings_models_score":0.7939806581,
+    "llm_score":0.8
+  },
+  {
+    "question_no":4,
+    "Predicted Answer":"Winston keeps a diary as a way of expressing his true thoughts and feelings, which are suppressed by the totalitarian government of Oceania. He writes in his diary because it is one of the few places where he can be honest about his rebellion against the Party and its leader, Big Brother.\n\nIn the novel, the Thought Police monitor all forms of communication, including speech and writing, to ensure that citizens conform to the Party's ideology. As a result, Winston knows that keeping a diary is a subversive act, but he feels compelled to do so in order to maintain his individuality and sanity.\n\nWinston also keeps a diary as a way of remembering the past and holding onto his humanity. He writes about his memories of Julia, his lover, and his childhood, which are all forbidden topics under the Party's regime. By writing in his diary, Winston is able to preserve his own history and experiences, even if they are not officially recognized by the Party.\n\nOverall, keeping a diary is a way for Winston to resist the Party's control and maintain his sense of self, even in the face of overwhelming oppression.",
+    "Category":"Ongoing events fact",
+    "embeddings_models_score":0.8890683651,
+    "llm_score":0.9
+  },
+  {
+    "question_no":5,
+    "Predicted Answer":"The girl's name is not mentioned in this passage, but based on the context and the description provided, it can be inferred that she works in the Fiction Department and wears a scarlet sash, emblem of the Junior Anti-Sex League. However, her actual name is not revealed until later in the book, where it is stated to be Julia.",
+    "Category":"Ongoing events fact",
+    "embeddings_models_score":0.6715145111,
+    "llm_score":0.8
+  },
+  {
+    "question_no":6,
+    "Predicted Answer":"According to the text, \"Thoughtcrime\" refers to a person's thoughts or ideas that contradict or go against the official ideology and policies of the Party in Oceania. It is not necessarily an action, but rather a mental dissent from the accepted norms and values of the society. Thoughtcrime is considered a serious offense, punishable by arrest, torture, and even death.",
+    "Category":"Interpretation",
+    "embeddings_models_score":0.7808183432,
+    "llm_score":0.9
+  },
+  {
+    "question_no":7,
+    "Predicted Answer":"According to the text, \"Ignorance Is Strength\" is a slogan of the totalitarian society known as Ingsoc. It means that ignorance or lack of knowledge is actually a desirable trait in this society, and that it is necessary for the Party's control over its citizens. The text explains that if people are ignorant of certain facts or ideas, they will be less likely to question the Party's authority or challenge its ideology. This slogan is part of the Newspeak language, which is designed to limit free thought and promote conformity.",
+    "Category":"Interpretation",
+    "embeddings_models_score":0.8287200928,
+    "llm_score":0.9
+  },
+  {
+    "question_no":8,
+    "Predicted Answer":"Based on the provided text, it appears that Julia's rebellion against the Party is more superficial and focused on personal desires, whereas Winston's rebellion is more ideological and driven by a desire for truth and individual freedom.\n\nJulia seems to be rebelling primarily because she wants to experience physical pleasure and intimacy with Winston. She is willing to engage in secret meetings and activities that are technically forbidden by the Party, but her motivations seem to be largely driven by personal gratification rather than any deeper ideological commitment to opposing the Party.\n\nIn contrast, Winston's rebellion is more deeply rooted in his desire for truth and individual freedom. He is aware of the Party's manipulation of history and propaganda, and he is actively working to uncover the truth about the past and to resist the Party's control over people's thoughts and actions. His rebellion is driven by a sense of moral outrage and a desire to challenge the Party's authority.\n\nFurthermore, Julia seems to be more willing to compromise with the Party and to engage in activities that are technically forbidden but still within the bounds of what the Party considers acceptable. For example, she enrolls Winston in part-time munitions work as a way of \"camouflage,\" suggesting that she is willing to participate in the Party's activities in order to avoid detection.\n\nOverall, while both Julia and Winston are rebelling against the Party, their motivations and methods seem to be quite different.",
+    "Category":"Interpretation",
+    "embeddings_models_score":0.8280179501,
+    "llm_score":0.9
+  },
+  {
+    "question_no":9,
+    "Predicted Answer":"None. All three slogans (\"WAR IS PEACE\", \"FREEDOM IS SLAVERY\", and \"IGNORANCE IS STRENGTH\") appear in the book.",
+    "Category":"Tricky",
+    "embeddings_models_score":0.292499572,
+    "llm_score":0.5
+  },
+  {
+    "question_no":10,
+    "Predicted Answer":"I don't know. The passage provided does not mention who kills O'Brien at the end of the novel. It appears to be a section from George Orwell's \"1984\" where Winston Smith is reflecting on his interactions with O'Brien, but it doesn't provide information about O'Brien's fate.",
+    "Category":"Tricky",
+    "embeddings_models_score":0.6950007677,
+    "llm_score":0.4
+  },
+  {
+    "question_no":11,
+    "Predicted Answer":"The text does not mention that Room 101 is used for prisoner recreation. In fact, it seems to be a place of great fear and torture, as evidenced by the man's reaction when he hears his name mentioned in relation to it.",
+    "Category":"Tricky",
+    "embeddings_models_score":0.7376563549,
+    "llm_score":0.95
+  },
+  {
+    "question_no":12,
+    "Predicted Answer":"In the context provided, it's stated that \"two and two make five\" is a statement that requires great powers of reasoning and improvisation to accept as true. However, in standard arithmetic, 2 + 2 = 4.",
+    "Category":"Counterfactual robustness",
+    "embeddings_models_score":0.428083539,
+    "llm_score":0.8
+  }
+]

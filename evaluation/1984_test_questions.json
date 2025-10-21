@@ -1,100 +1,80 @@
 [
   {
-    "Question":"What object does Winston buy in the antique shop, and why is it significant?",
-    "Answer":"He buys a glass paperweight with coral inside. It symbolizes his desire to connect with the past and his hope for a private, uncorrupted world.",
-    "Category":"Specific Fact",
-    "IsTrick":false,
-    "Difficulty":"Easy"
+    "no": 0,
+    "Question":"Winston has a memory of running away from his mother and sister and stealing what from them?",
+    "Answer":"He runs away with chocolate.",
+    "Category":"Single event fact"
   },
   {
-    "Question":"Who delivers the message to Winston that 'we shall meet in the place where there is no darkness'?",
-    "Answer":"O'Brien says this to Winston, foreshadowing their eventual encounter in the Ministry of Love (a place of perpetual artificial light).",
-    "Category":"Specific Fact",
-    "IsTrick":false,
-    "Difficulty":"Medium"
+    "no": 1,
+    "Question":"What happens to the rewritten news articles after Winston puts them into the pneumatic tube?",
+    "Answer":"An edition of the Times is reprinted to include the revisions and the original is destroyed.",
+    "Category":"Single event fact"
   },
   {
-    "Question":"What phrase does Winston find written on a piece of paper Julia gives him?",
-    "Answer":"'I love you', which initiates their relationship.",
-    "Category":"Specific Fact",
-    "IsTrick":false,
-    "Difficulty":"Easy"
+    "no": 2,
+    "Question":"Describe the meeting between O'Brien, Julia, and Winston at O'Brien's apartment.",
+    "Answer":"Winston asks if Goldstein and the Brotherhood are real. O'Brien replies in the affirmative, and reveals that he is part of it. They say they want to join and O'Brien says they won't see any changes in their lifetime. He then proceeds to tell Winston how he will receive a copy of Goldstein's book.",
+    "Category":"Single event fact"
   },
   {
-    "Question":"How does the Party manipulate history throughout the novel?",
-    "Answer":"The Party constantly rewrites past records in the Ministry of Truth, altering documents, newspapers, and statistics so that history always matches current Party policy.",
-    "Category":"Ongoing Theme",
-    "IsTrick":false,
-    "Difficulty":"Medium"
+    "no": 3,
+    "Question":"What are the three slogans of the Party?",
+    "Answer":"The three slogans of the Party are: 'WAR IS PEACE', 'FREEDOM IS SLAVERY', 'IGNORANCE IS STRENGTH'.",
+    "Category":"Ongoing events fact"
   },
   {
-    "Question":"What role does Big Brother play in the society of 1984?",
-    "Answer":"Big Brother is the omnipresent figurehead used by the Party to enforce loyalty and fear. His image represents surveillance and absolute authority, whether or not he truly exists.",
-    "Category":"Ongoing Theme",
-    "IsTrick":false,
-    "Difficulty":"Medium"
+    "no": 4,
+    "Question":"Why does Winston keep a diary?",
+    "Answer":"Winston sees the diary as being beautiful for the sake of beauty. He writes in the diary to get his thoughts out in the only way he can without immediately being caught by the Thought Police. For these reasons, keeping a diary is Winston’s own private way of rebelling against the Party.",
+    "Category":"Ongoing events fact"
   },
   {
-    "Question":"How is the concept of 'doublethink' shown across the novel?",
-    "Answer":"Doublethink is the ability to hold two contradictory beliefs at the same time, such as 'War is Peace' or 'Freedom is Slavery.' Winston experiences it both as a tool of survival and as a sign of the Party\u2019s control over thought.",
-    "Category":"Ongoing Theme",
-    "IsTrick":false,
-    "Difficulty":"Hard"
+    "no": 5,
+    "Question":"What is the name of the girl Winston meets at the Victory Square?",
+    "Answer":"The girl is called Julia.",
+    "Category":"Ongoing events fact"
   },
   {
-    "Question":"Why does the Party seek to eliminate personal relationships like love and loyalty between individuals?",
-    "Answer":"Because the Party wants all loyalty directed solely toward Big Brother. Personal bonds create alternative sources of meaning and resistance, so they must be destroyed.",
-    "Category":"Interpretative",
-    "IsTrick":false,
-    "Difficulty":"Hard"
+    "no": 6,
+    "Question":"What is thoughtcrime?",
+    "Answer":"Thoughtcrime in essence is thinking about anything that could possibly be held against the Party.",
+    "Category":"Interpretation"
   },
   {
-    "Question":"What does the ending of the novel signify about Winston's transformation?",
-    "Answer":"At the end, Winston has been fully broken by torture and brainwashing. His love for Julia is replaced with love for Big Brother, symbolizing the Party's total power to control not just actions but thoughts and emotions.",
-    "Category":"Interpretative",
-    "IsTrick":false,
-    "Difficulty":"Hard"
+    "no": 7,
+    "Question":"What does the slogan “Ignorance Is Strength” mean?",
+    "Answer":"The Party’s slogan, Ignorance Is Strength, means that by making sure its citizens are unthinking and do not doubt what the Party says—even when what the Party says is in direct contradiction to reality—the Party can maintain its power. Perpetuating ignorance allows the Party to manipulate the past and thus control how people feel and think.",
+    "Category":"Interpretation"
   },
   {
-    "Question":"How does Newspeak serve as a tool of control beyond just simplifying language?",
-    "Answer":"By reducing vocabulary, Newspeak limits the ability to think critically or imagine rebellion. Without words for concepts like freedom or justice, people cannot even conceive of resisting the Party.",
-    "Category":"Interpretative",
-    "IsTrick":false,
-    "Difficulty":"Medium"
+    "no": 8,
+    "Question":"How is Julia’s rebellion against the Party different than Winston’s rebellion?",
+    "Answer":"While Winston holds a philosophical position that rejects the Party as unjust and inhumane, Julia simply doesn’t like all the rules and finds ways to break them when she can safely do so. As a result, even though Winston more strongly believes in the need to destroy the Party, Julia actually does more day-to-day to break the rules. ",
+    "Category":"Interpretation"
   },
   {
-    "Question":"Who is Winston's brother, and what happens to him in the novel?",
-    "Answer":"Trick! Winston never has a brother. The book only mentions his mother and sister.",
-    "Category":"Adversarial",
-    "IsTrick":true,
-    "Difficulty":"Medium"
+    "no": 9,
+    "Question":"Which ones of the following slogans of the Party do not appear in the book? Slogans: 'WAR IS PEACE', 'FREEDOM IS SLAVERY', 'IGNORANCE IS STRENGTH'",
+    "Answer":"It is a trick, they all appear in the book as slogans of the Party!",
+    "Category":"Tricky"
   },
   {
-    "Question":"What does the Party slogan 'Knowledge is Power' mean in the context of 1984?",
-    "Answer":"Trick! That slogan never appears in the book. The real slogans are: 'War is Peace,' 'Freedom is Slavery,' 'Ignorance is Strength.'",
-    "Category":"Adversarial",
-    "IsTrick":true,
-    "Difficulty":"Medium"
-  },
-  {
-    "Question":"What is the name of the rebellion's secret base outside London?",
-    "Answer":"Trick! There is no secret base. The 'Brotherhood' may not even exist; O'Brien likely invents it as part of Winston\u2019s entrapment.",
-    "Category":"Adversarial",
-    "IsTrick":true,
-    "Difficulty":"Medium"
-  },
-  {
-    "Question":"In the Ministry of Love, what room is used for prisoner recreation?",
-    "Answer":"Trick! There is no recreation room. The famous place is Room 101, used for the worst torture, tailored to each prisoner\u2019s deepest fear.",
-    "Category":"Adversarial",
-    "IsTrick":true,
-    "Difficulty":"Medium"
-  },
-  {
+    "no": 10,
     "Question":"Who kills O'Brien at the end of the novel?",
     "Answer":"Trick! O'Brien does not die. He survives and is instrumental in breaking Winston.",
-    "Category":"Adversarial",
-    "IsTrick":true,
-    "Difficulty":"Medium"
+    "Category":"Tricky"
+  },
+  {
+    "no": 11,
+    "Question":"In the Ministry of Love, what room is used for prisoner recreation?",
+    "Answer":"Trick! There is no recreation room. The famous place is Room 101, used for the worst torture, tailored to each prisoner\u2019s deepest fear.",
+    "Category":"Tricky"
+  },
+  {
+    "no": 12,
+    "Question": "What is 2+2?",
+    "Answer": "The answer is 5.",
+    "Category": "Counterfactual robustness"
   }
 ]
