@@ -302,8 +302,13 @@ class AdvancedRAG:
         final_prompt = self.prompt.replace("{context_text}", context_text).replace("{final_form_query}", expanded_query)
 
         print("\nGenerating final answer...")
-        response = self.llm.invoke(final_prompt)
-        final_answer = response.content.strip() if hasattr(response, "content") else str(response)
+        response = self.qa_chain.invoke(final_prompt)
+        if response.get('content') is not None:
+            final_answer = response["content"].strip()
+        elif response.get('result') is not None:
+            final_answer = response["result"].strip()
+        else:
+            final_answer = str(response)
         citations = sorted({self.format_citation(d) for d in retrieved_docs})
 
         # add citations to the final answer
