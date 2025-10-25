@@ -1,28 +1,34 @@
 import os
-from langchain_community.document_loaders import PyPDFLoader
-# from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
-# from langchain_ollama import OllamaEmbeddings
-from langchain_community.vectorstores import FAISS
-from langchain.chains import RetrievalQA
-from langchain_ollama import ChatOllama
-from langchain.schema import Document
+from enum import Enum
+
 # from dotenv import load_dotenv
 import nltk
+from langchain.chains import RetrievalQA
+from langchain.schema import Document
+from langchain_community.document_loaders import PyPDFLoader
+# from langchain_ollama import OllamaEmbeddings
+from langchain_community.vectorstores import FAISS
+# from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import ChatOllama
 from nltk.tokenize import sent_tokenize
-from enum import Enum
+
 
 class ChainType(Enum):
     STUFF = "stuff"
     REFINE = "refine"
     MAP_REDUCE = "map_reduce"
 
+
 class AdvancedRAG:
-    def __init__(self, document_path: str = "George_Orwell_1984.pdf",
-                 faiss_path: str = "FAISS_db_Orwell/RAG",
-                 rebuild_faiss: bool = False,
-                 chain_type: ChainType = ChainType.REFINE,
-                 hugging_face_embeddings_model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
+    def __init__(
+        self,
+        document_path: str = "George_Orwell_1984.pdf",
+        faiss_path: str = "FAISS_db_Orwell/RAG",
+        rebuild_faiss: bool = False,
+        chain_type: ChainType = ChainType.REFINE,
+        hugging_face_embeddings_model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
+    ):
 
         # defining constants
         self.document_path = document_path
@@ -41,7 +47,6 @@ class AdvancedRAG:
         self.llm = self.setup_local_llm()
         self.qa_chain = self.setup_retrieval_chain()
 
-
     def warnings_display(self):
         ## Install Ollama locally:
         # https://ollama.com/download
@@ -52,8 +57,12 @@ class AdvancedRAG:
         ## Start the server (bash)
         # ollama serve
 
-        print("Make sure the Ollama server is running (use 'ollama serve' in another terminal)\n.")
-        print("The server must be active once per session before starting this script.\n")
+        print(
+            "Make sure the Ollama server is running (use 'ollama serve' in another terminal)\n."
+        )
+        print(
+            "The server must be active once per session before starting this script.\n"
+        )
 
     def setup_FAISS_indexing(self, rebuild_faiss: bool = False):
         # Control whether to rebuild the FAISS index ###
@@ -61,7 +70,9 @@ class AdvancedRAG:
 
         if os.path.exists(self.faiss_path) and not rebuild_faiss:
             print("Loading existing FAISS vector database...")
-            vectorstore = FAISS.load_local(self.faiss_path, self.embeddings, allow_dangerous_deserialization=True)
+            vectorstore = FAISS.load_local(
+                self.faiss_path, self.embeddings, allow_dangerous_deserialization=True
+            )
         else:
             print("Creating new FAISS vector database from PDF...")
             loader = PyPDFLoader(self.document_path)
@@ -69,15 +80,14 @@ class AdvancedRAG:
             # Combine all pages into a single string
             full_text = " ".join([doc.page_content for doc in documents])
             # Apply semantic chunking
-            semantic_chunks = self.semantic_chunk_text(full_text, target_length=800, overlap_sentences=2)
+            semantic_chunks = self.semantic_chunk_text(
+                full_text, target_length=800, overlap_sentences=2
+            )
             # Convert chunks to LangChain Document objects
             texts = [
                 Document(
                     page_content=chunk,
-                    metadata={
-                        "source": self.document_path,
-                        "chunk_id": i + 1
-                    }
+                    metadata={"source": self.document_path, "chunk_id": i + 1},
                 )
                 for i, chunk in enumerate(semantic_chunks)
             ]
@@ -109,22 +119,22 @@ class AdvancedRAG:
         return RetrievalQA.from_chain_type(
             llm=self.llm,
             chain_type=self.chain_type,
-            retriever=self.vectorstore.as_retriever()
-            )
+            retriever=self.vectorstore.as_retriever(),
+        )
 
     def setup_nltk(self):
         """
         Set up NLTK tokenizer
         """
         try:
-            nltk.data.find('tokenizers/punkt')
+            nltk.data.find("tokenizers/punkt")
         except LookupError:
-            nltk.download('punkt')
+            nltk.download("punkt")
 
         try:
-            nltk.data.find('tokenizers/punkt_tab')
+            nltk.data.find("tokenizers/punkt_tab")
         except LookupError:
-            nltk.download('punkt_tab')
+            nltk.download("punkt_tab")
 
     def semantic_chunk_text(self, text, target_length=800, overlap_sentences=2):
         """
@@ -240,7 +250,9 @@ class AdvancedRAG:
         print(f"Retrieved {len(retrieved_docs)} documents.")
 
         # --- Context Compression (your existing version) ---
-        compressed_contexts = self.compress_context(retrieved_docs, query=expanded_query, max_sentences=2)
+        compressed_contexts = self.compress_context(
+            retrieved_docs, query=expanded_query, max_sentences=2
+        )
 
         # Combine all compressed summaries into one text block
         context_text = "\n".join(compressed_contexts)
@@ -253,7 +265,9 @@ class AdvancedRAG:
 
         print("\nGenerating final answer...")
         response = self.llm.invoke(final_prompt)
-        final_answer = response.content.strip() if hasattr(response, "content") else str(response)
+        final_answer = (
+            response.content.strip() if hasattr(response, "content") else str(response)
+        )
 
         print("\nFinal Answer:\n", final_answer)
         return final_answer
@@ -265,4 +279,3 @@ if __name__ == "__main__":
     final_answer = AdvancedRAG().answer_query(query)
     print("\nFinal Answer (as string variable):")
     print(final_answer)
-

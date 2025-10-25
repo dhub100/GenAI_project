@@ -1,11 +1,12 @@
 import os
-from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_community.vectorstores import FAISS
+
 from langchain.chains import RetrievalQA
-from langchain_ollama import ChatOllama
 from langchain.schema import Document
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.vectorstores import FAISS
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import ChatOllama
 
 # from dotenv import load_dotenv
 
@@ -22,7 +23,6 @@ from langchain.schema import Document
 # ollama serve
 
 
-
 # Load environment variables (not needed anymore)
 # load_dotenv()
 
@@ -35,7 +35,9 @@ embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-
 faiss_path = "FAISS_db_Orwell/RAG"
 
 if os.path.exists(faiss_path):
-    vectorstore = FAISS.load_local(faiss_path, embeddings, allow_dangerous_deserialization=True)
+    vectorstore = FAISS.load_local(
+        faiss_path, embeddings, allow_dangerous_deserialization=True
+    )
 else:
     loader = PyPDFLoader("George_Orwell_1984.pdf")
     documents = loader.load()
@@ -48,9 +50,7 @@ else:
 llm = ChatOllama(model="llama3.1:8b", temperature=0.1)
 
 qa_chain = RetrievalQA.from_chain_type(
-    llm=llm,
-    chain_type="stuff",
-    retriever=vectorstore.as_retriever()
+    llm=llm, chain_type="stuff", retriever=vectorstore.as_retriever()
 )
 
 
@@ -58,7 +58,9 @@ def answer_query(query: str):
     """
     Runs the RAG pipeline on a given query and returns the model's answer.
     """
-    print("💭 Thinking... (retrieving context and generating answer, this may take a while)")
+    print(
+        "💭 Thinking... (retrieving context and generating answer, this may take a while)"
+    )
     response = qa_chain.invoke(query)
     print("✅ Done!\n")
     if isinstance(response, dict) and "result" in response:

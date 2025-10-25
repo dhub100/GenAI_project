@@ -1,37 +1,44 @@
 import os
-from langchain_community.document_loaders import PyPDFLoader
-# from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain_ollama import OllamaEmbeddings
-from langchain_community.vectorstores import FAISS
-from prompts import PROMPT_PRESETS
-from langchain.chains import RetrievalQA
-from langchain_ollama import ChatOllama
-from langchain.schema import Document
+from enum import Enum
+
 # from dotenv import load_dotenv
 import nltk
+from langchain.chains import RetrievalQA
+from langchain.schema import Document
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.vectorstores import FAISS
+# from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_ollama import ChatOllama, OllamaEmbeddings
 from nltk.tokenize import sent_tokenize
-from enum import Enum
+
+from prompts import PROMPT_PRESETS
+
 
 class ChainType(Enum):
     STUFF = "stuff"
     REFINE = "refine"
     MAP_REDUCE = "map_reduce"
 
+
 class EmbeddingModelType(Enum):
-    Ollama  = "OllamaEmbedding"
+    Ollama = "OllamaEmbedding"
     HuggingFace = "HuggingFaceEmbedding"
 
+
 class AdvancedRAG:
-    def __init__(self, document_path: str = "George_Orwell_1984.pdf",
-                 rebuild_faiss: bool = False,
-                 embedding_model_type: EmbeddingModelType=EmbeddingModelType.HuggingFace,
-                 chain_type: ChainType = ChainType.REFINE,
-                 prompt: str = PROMPT_PRESETS["default"],
-                 compression: bool = True,
-                 nb_chunks: int = 5,
-                 llm_temperature: float = 0.1,
-                 role_name: str = "default"):
+    def __init__(
+        self,
+        document_path: str = "George_Orwell_1984.pdf",
+        rebuild_faiss: bool = False,
+        embedding_model_type: EmbeddingModelType = EmbeddingModelType.HuggingFace,
+        chain_type: ChainType = ChainType.REFINE,
+        prompt: str = PROMPT_PRESETS["default"],
+        compression: bool = True,
+        nb_chunks: int = 5,
+        llm_temperature: float = 0.1,
+        role_name: str = "default",
+    ):
 
         # defining constants
         self.document_path = document_path
@@ -55,7 +62,6 @@ class AdvancedRAG:
         self.llm = self.setup_local_llm()
         self.qa_chain = self.setup_retrieval_chain()
 
-
     def warnings_display(self):
         ## Install Ollama locally:
         # https://ollama.com/download
@@ -67,14 +73,18 @@ class AdvancedRAG:
         # ollama serve
         # ollama pull llama3.1: 8b
         # ollama pull nomic-embed-text
-        print("Make sure the Ollama server is running (use 'ollama serve' in another terminal)\n.")
-        print("The server must be active once per session before starting this script.\n")
+        print(
+            "Make sure the Ollama server is running (use 'ollama serve' in another terminal)\n."
+        )
+        print(
+            "The server must be active once per session before starting this script.\n"
+        )
 
     def get_FAISS_path(self):
         if self.embedding_model_type == EmbeddingModelType.Ollama:
             return "FAISS_db_Orwell_nomic/RAG"
         elif self.embedding_model_type == EmbeddingModelType.HuggingFace:
-             return "FAISS_db_Orwell/RAG"
+            return "FAISS_db_Orwell/RAG"
 
     def setup_FAISS_indexing(self, rebuild_faiss: bool = False):
         # Control whether to rebuild the FAISS index ###
@@ -82,7 +92,9 @@ class AdvancedRAG:
 
         if os.path.exists(self.faiss_path) and not rebuild_faiss:
             print("Loading existing FAISS vector database...")
-            vectorstore = FAISS.load_local(self.faiss_path, self.embeddings, allow_dangerous_deserialization=True)
+            vectorstore = FAISS.load_local(
+                self.faiss_path, self.embeddings, allow_dangerous_deserialization=True
+            )
         else:
             print("Creating new FAISS vector database from PDF...")
             loader = PyPDFLoader(self.document_path)
@@ -92,16 +104,20 @@ class AdvancedRAG:
             for i, doc in enumerate(documents, start=1):
                 page_num = doc.metadata.get("page", i)
                 # apply semantic chunking to each page
-                page_chunks = self.semantic_chunk_text(doc.page_content, page_number=page_num, target_length=800,
-                                                  overlap_sentences=2)
+                page_chunks = self.semantic_chunk_text(
+                    doc.page_content,
+                    page_number=page_num,
+                    target_length=800,
+                    overlap_sentences=2,
+                )
 
                 # Combine all pages into a single string
                 # full_text = " ".join([doc.page_content for doc in documents])
-                    # => put the texts list into the semantic_chunking function instead.
+                # => put the texts list into the semantic_chunking function instead.
                 for j, chunk in enumerate(page_chunks, start=1):
-                    chunk.metadata.update({
-                        "source": self.document_path,
-                        "chunk_id": f"{page_num}-{j}"})
+                    chunk.metadata.update(
+                        {"source": self.document_path, "chunk_id": f"{page_num}-{j}"}
+                    )
 
                 texts.extend(page_chunks)
 
@@ -126,7 +142,9 @@ class AdvancedRAG:
         if self.embedding_model_type == EmbeddingModelType.Ollama:
             return OllamaEmbeddings(model="nomic-embed-text")
         elif self.embedding_model_type == EmbeddingModelType.HuggingFace:
-            return HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+            return HuggingFaceEmbeddings(
+                model_name="sentence-transformers/all-MiniLM-L6-v2"
+            )
 
     def setup_retrieval_chain(self):
         """
@@ -136,22 +154,22 @@ class AdvancedRAG:
         return RetrievalQA.from_chain_type(
             llm=self.llm,
             chain_type=self.chain_type.value,
-            retriever=self.vectorstore.as_retriever()
-            )
+            retriever=self.vectorstore.as_retriever(),
+        )
 
     def setup_nltk(self):
         """
         Set up NLTK tokenizer
         """
         try:
-            nltk.data.find('tokenizers/punkt')
+            nltk.data.find("tokenizers/punkt")
         except LookupError:
-            nltk.download('punkt')
+            nltk.download("punkt")
 
         try:
-            nltk.data.find('tokenizers/punkt_tab')
+            nltk.data.find("tokenizers/punkt_tab")
         except LookupError:
-            nltk.download('punkt_tab')
+            nltk.download("punkt_tab")
 
     def format_citation(self, doc):
         """
@@ -176,7 +194,9 @@ class AdvancedRAG:
 
         return " ".join(parts) if parts else "unknown"
 
-    def semantic_chunk_text(self, text, page_number, target_length=800, overlap_sentences=2):
+    def semantic_chunk_text(
+        self, text, page_number, target_length=800, overlap_sentences=2
+    ):
         """
         Split text into semantic chunks based on sentences.
         """
@@ -188,12 +208,16 @@ class AdvancedRAG:
             current_chunk.append(sentence)
             if len(" ".join(current_chunk)) > target_length:
                 chunk_text = " ".join(current_chunk)
-                chunks.append(Document(page_content=chunk_text, metadata={"page": page_number}))
+                chunks.append(
+                    Document(page_content=chunk_text, metadata={"page": page_number})
+                )
                 current_chunk = current_chunk[-overlap_sentences:]
 
         if current_chunk:
             chunk_text = " ".join(current_chunk)
-            chunks.append(Document(page_content=chunk_text, metadata={"page": page_number}))
+            chunks.append(
+                Document(page_content=chunk_text, metadata={"page": page_number})
+            )
         return chunks
 
     def compress_context(self, retrieved_docs, query: str, max_sentences: int = 2):
@@ -292,20 +316,26 @@ class AdvancedRAG:
 
         # --- Context Compression (your existing version) ---
         if self.compression:
-            compressed_docs = self.compress_context(retrieved_docs, query=expanded_query, max_sentences=2)
+            compressed_docs = self.compress_context(
+                retrieved_docs, query=expanded_query, max_sentences=2
+            )
             # Combine all compressed summaries into one text block
             context_text = "\n".join(compressed_docs)
         else:
-            context_text = "\n".join([doc.page_content.strip() for doc in retrieved_docs])
+            context_text = "\n".join(
+                [doc.page_content.strip() for doc in retrieved_docs]
+            )
 
         # --- Final Combined Prompt ---
-        final_prompt = self.prompt.replace("{context_text}", context_text).replace("{final_form_query}", expanded_query)
+        final_prompt = self.prompt.replace("{context_text}", context_text).replace(
+            "{final_form_query}", expanded_query
+        )
 
         print("\nGenerating final answer...")
         response = self.qa_chain.invoke(final_prompt)
-        if response.get('content') is not None:
+        if response.get("content") is not None:
             final_answer = response["content"].strip()
-        elif response.get('result') is not None:
+        elif response.get("result") is not None:
             final_answer = response["result"].strip()
         else:
             final_answer = str(response)
@@ -333,5 +363,5 @@ if __name__ == "__main__":
         compression=True,
         nb_chunks=2,
         prompt=selected_prompt,
-        role_name=role_name
+        role_name=role_name,
     ).answer_query(query)
