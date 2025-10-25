@@ -27,3 +27,11 @@ FAISS_db/
 # Sonstige
 .DS_Store
 Thumbs.db
+
+# uncompressed results and results figures
+*/advancedRAG_*
+*/basicRAG_*
+*/directLLM_*
+
+# indexed document
+FAISS*
