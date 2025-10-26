@@ -10,8 +10,8 @@ The script automatically performs document loading, semantic chunking, embedding
 
 ## Requirements
 
--   Python 3.10 or higher\
--   Ollama installed and available locally\
+-   Python 3.10 or higher\\
+-   Ollama installed and available locally
 -   The Ollama server must be running before starting the script
 
 ------------------------------------------------------------------------
@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ## Setup
 
-1.  Place the file **`George_Orwell_1984.pdf`** in the RAG_Database directory.\
+1.  Place the file **`George_Orwell_1984.pdf`** in the RAG_Database directory.
 
 2. Complete your .env file with your personal absolute path to the project. 
 
