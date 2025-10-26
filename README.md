@@ -22,7 +22,7 @@ The script automatically performs document loading, semantic chunking, embedding
 Install all required dependencies:
 
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 ---
