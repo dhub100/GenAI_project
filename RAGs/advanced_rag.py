@@ -12,7 +12,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama import ChatOllama, OllamaEmbeddings
 from nltk.tokenize import sent_tokenize
 
-from prompts import PROMPT_PRESETS
+from RAG_Database.prompts import PROMPT_PRESETS
 
 
 class ChainType(Enum):
@@ -29,7 +29,7 @@ class EmbeddingModelType(Enum):
 class AdvancedRAG:
     def __init__(
         self,
-        document_path: str = "George_Orwell_1984.pdf",
+        document_path: str = "../RAG_Database/George_Orwell_1984.pdf",
         rebuild_faiss: bool = False,
         embedding_model_type: EmbeddingModelType = EmbeddingModelType.HuggingFace,
         chain_type: ChainType = ChainType.REFINE,
@@ -82,9 +82,9 @@ class AdvancedRAG:
 
     def get_FAISS_path(self):
         if self.embedding_model_type == EmbeddingModelType.Ollama:
-            return "FAISS_db_Orwell_nomic/RAG"
+            return "../RAG_Database/FAISS_db_Orwell_nomic/RAG"
         elif self.embedding_model_type == EmbeddingModelType.HuggingFace:
-            return "FAISS_db_Orwell/RAG"
+            return "../RAG_Database/FAISS_db_Orwell/RAG"
 
     def setup_FAISS_indexing(self, rebuild_faiss: bool = False):
         # Control whether to rebuild the FAISS index ###
