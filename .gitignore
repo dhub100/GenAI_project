@@ -19,7 +19,8 @@ ENV/
 *.iml
 
 # FAISS-Datenbank
-FAISS_db/
+FAISS_db*/
+FAISS_*/
 
 # Umgebungsvariablen
 .env
@@ -27,6 +28,7 @@ FAISS_db/
 # Sonstige
 .DS_Store
 Thumbs.db
+Answers_by_Role.txt
 
 # uncompressed results and results figures
 */advancedRAG_*
