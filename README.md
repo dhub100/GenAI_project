@@ -157,10 +157,10 @@ However, we found that the LLM-based scoring gave results that matched human jud
 ### Question Categories
 
 We defined several question types to test different aspects of the RAG system: - **Single event fact** – questions about a specific event or fact\
-- **Ongoing events fact** – questions about current or continuous situations\
-- **Interpretation** – questions requiring reasoning or understanding beyond direct facts\
-- **Tricky** – questions related to the book, but whose answer is *not* in the book\
-- **Counterfactual robustness** – questions where the book contains incorrect information, to test if the model can notice it\
+- **Ongoing events fact** – questions about current or continuous situations
+- **Interpretation** – questions requiring reasoning or understanding beyond direct facts
+- **Tricky** – questions related to the book, but whose answer is *not* in the book
+- **Counterfactual robustness** – questions where the book contains incorrect information, to test if the model can notice it
 - **Negative rejection** – questions that are not about the book at all
 
 ### Results and Observations
