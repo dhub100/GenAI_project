@@ -30,13 +30,15 @@ pip install -r requirements.txt
 
 1.  Place the file **`George_Orwell_1984.pdf`** in the RAG_Database directory.\
 
-2.  Start the Ollama server locally:
+2. Complete your .env file with your personal absolute path to the project. 
+
+3.  Start the Ollama server locally:
 
     ``` bash
     ollama serve
     ```
 
-3.  Make sure the models are available locally:
+4.  Make sure the models are available locally:
 
     ``` bash
     ollama pull llama3.1:8b
