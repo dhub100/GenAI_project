@@ -139,7 +139,7 @@ This project implements several practical enhancements to move from a **naive RA
 
 The RAG parameters impact on the RAG performance were evaluated. The evaluation results are in the evaluation folder.
 
-The evaluation method was to ask an LLM to rate the answer based on the official answer (Does the predicted answer contains the information from the gold answer? And not too many additional elements?). Indeed, the scores provided by this technique were compared to those provided by an embedding cosine similarity score. The LLM-scoring technique provided score that were judge as more accurate (see evaluation/evaluation_testing notebook).
+The evaluation method was to ask an LLM to rate the answer based on the official answer (Does the predicted answer contain the information from the gold answer? And not too many additional elements?). Indeed, the scores provided by this technique were compared to those provided by an embedding cosine similarity score. The LLM-scoring technique provided score was judged as more accurate (see evaluation/evaluation_testing notebook).
 
 Multiple questions were defined. Their categories are:
  - single event fact
