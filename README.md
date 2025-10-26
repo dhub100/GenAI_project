@@ -29,14 +29,15 @@ pip install -r requirements.txt
 
 ## Setup
 
-1. Place the file **`George_Orwell_1984.pdf`** in the project directory.  
-2. Ensure you have a **Hugging Face access token** (required for embedding models if using HuggingFace).  
-3. Start the Ollama server locally:
+1. Place the file **`George_Orwell_1984.pdf`** in the RAG_Database directory. 
+2. Complete your .env file with your personal absolute path to the project. 
+3. Ensure you have a **Hugging Face access token** (required for embedding models if using HuggingFace).  
+4. Start the Ollama server locally:
    ```bash
    ollama serve
    ```
    or use the provided `.bat` file (e.g. `start_ollama.bat`).
-4. Make sure the models are available locally:
+5. Make sure the models are available locally:
    ```bash
    ollama pull llama3.1:8b
    ollama pull nomic-embed-text
