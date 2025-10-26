@@ -10,7 +10,7 @@ The script automatically performs document loading, semantic chunking, embedding
 
 ## Requirements
 
--   Python 3.10 or higher\\
+-   Python 3.10 or higher
 -   Ollama installed and available locally
 -   The Ollama server must be running before starting the script
 
@@ -85,10 +85,10 @@ What is the Junior Anti-Sex League Orwell is writing about?
 
 When you run the script, you will see several progress messages in the console:
 
-1.  **Loading steps** – confirms that embeddings, the FAISS vector database, and the local Llama model were loaded correctly.\
-2.  **Query expansion** – the script generates 3–5 alternative versions of your question and prints them.\
-3.  **Retrieval & compression** – relevant chunks are retrieved and optionally summarized before being passed to the LLM.\
-4.  **Final answer generation** – the chosen structured prompt template is filled and executed.\
+1.  **Loading steps** – confirms that embeddings, the FAISS vector database, and the local Llama model were loaded correctly.
+2.  **Query expansion** – the script generates 3–5 alternative versions of your question and prints them.
+3.  **Retrieval & compression** – relevant chunks are retrieved and optionally summarized before being passed to the LLM.
+4.  **Final answer generation** – the chosen structured prompt template is filled and executed.
 5.  **Final Answer** – a concise, context-based answer is printed at the end, including sources and the selected role.
 
 Example:
@@ -158,7 +158,8 @@ However, we found that the LLM-based scoring gave results that matched human jud
 
 ### Question Categories
 
-We defined several question types to test different aspects of the RAG system: - **Single event fact** – questions about a specific event or fact\
+We defined several question types to test different aspects of the RAG system:
+- **Single event fact** – questions about a specific event or fact
 - **Ongoing events fact** – questions about current or continuous situations
 - **Interpretation** – questions requiring reasoning or understanding beyond direct facts
 - **Tricky** – questions related to the book, but whose answer is *not* in the book
