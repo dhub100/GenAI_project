@@ -7,13 +7,14 @@ from langchain.chains import RetrievalQA
 from langchain.schema import Document
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.vectorstores import FAISS
-# from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama import ChatOllama, OllamaEmbeddings
 from nltk.tokenize import sent_tokenize
-
+from dotenv import load_dotenv
 from RAG_Database.prompts import PROMPT_PRESETS
 
+load_dotenv()
+PWD = os.environ.get("PROJECT_WORKING_DIRECTORY")
 
 class ChainType(Enum):
     STUFF = "stuff"
@@ -29,7 +30,7 @@ class EmbeddingModelType(Enum):
 class AdvancedRAG:
     def __init__(
         self,
-        document_path: str = "../RAG_Database/George_Orwell_1984.pdf",
+        document_path: str = f"{PWD}/RAG_Database/George_Orwell_1984.pdf",
         rebuild_faiss: bool = False,
         embedding_model_type: EmbeddingModelType = EmbeddingModelType.HuggingFace,
         chain_type: ChainType = ChainType.REFINE,
@@ -82,9 +83,9 @@ class AdvancedRAG:
 
     def get_FAISS_path(self):
         if self.embedding_model_type == EmbeddingModelType.Ollama:
-            return "../RAG_Database/FAISS_db_Orwell_nomic/RAG"
+            return f"{PWD}/RAG_Database/FAISS_db_Orwell_nomic/RAG"
         elif self.embedding_model_type == EmbeddingModelType.HuggingFace:
-            return "../RAG_Database/FAISS_db_Orwell/RAG"
+            return f"{PWD}/RAG_Database/FAISS_db_Orwell/RAG"
 
     def setup_FAISS_indexing(self, rebuild_faiss: bool = False):
         # Control whether to rebuild the FAISS index ###

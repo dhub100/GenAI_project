@@ -7,8 +7,10 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama import ChatOllama
+from dotenv import load_dotenv
 
-# from dotenv import load_dotenv
+load_dotenv()
+PWD = os.environ.get("PROJECT_WORKING_DIRECTORY")
 
 ## Install Ollama locally:
 # https://ollama.com/download
@@ -32,14 +34,14 @@ from langchain_ollama import ChatOllama
 # Use free Hugging Face embeddings instead of OpenAIEmbeddings
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
-faiss_path = "../RAG_Database/FAISS_db_Orwell/RAG"
+faiss_path = f"{PWD}/RAG_Database/FAISS_db_Orwell/RAG"
 
 if os.path.exists(faiss_path):
     vectorstore = FAISS.load_local(
         faiss_path, embeddings, allow_dangerous_deserialization=True
     )
 else:
-    loader = PyPDFLoader("../RAG_Database/George_Orwell_1984.pdf")
+    loader = PyPDFLoader(f"{PWD}/RAG_Database/George_Orwell_1984.pdf")
     documents = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=400)
     texts = text_splitter.split_documents(documents)
