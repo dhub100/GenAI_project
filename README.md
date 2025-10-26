@@ -22,7 +22,7 @@ The script automatically performs document loading, semantic chunking, embedding
 Install all required dependencies:
 
 ```bash
-pip install langchain langchain-community langchain-ollama langchain-huggingface faiss-cpu sentence-transformers nltk
+pip install requirements.txt
 ```
 
 ---
@@ -133,6 +133,23 @@ This project implements several practical enhancements to move from a **naive RA
 6. **Switchable Embedding Backends**  
    Choose between **HuggingFace** or **Ollama** embeddings.  
    → Enables both CPU-only and fully local setups.
+---
+## Evaluation of the RAG's performances
+
+The RAG parameters impact on the RAG performance were evaluated. The evaluation results are in the evaluation folder.
+
+The evaluation method was to ask an LLM to rate the answer based on the official answer (Does the predicted answer contains the information from the gold answer? And not too many additional elements?). Indeed, the scores provided by this technique were compared to those provided by an embedding cosine similarity score. The LLM-scoring technique provided score that were judge as more accurate (see evaluation/evaluation_testing notebook).
+
+Multiple questions were defined. Their categories are:
+ - single event fact
+ - ongoing events fact
+ - interpretation
+ - "tricky": the question is about the book but the answer is not in the book
+ - counterfactual robustness: the question is about a topic covered in the book. The information contained in the book is wrong. The LLM could detect it.
+ - negative rejection: the question is not about the book
+
+The results showed that the tested parameters (compression, number of retrieved text chunks, embedding model type, retrieval chain type) had little impact on the RAG performance score.
+The RAG performances were impacted by the questions. Some of them always scored high, while other scored low for all parameters combinations. Further analysis of the questions quality should be performed to understand the impact of the questions on the RAG performances.
 
 ---
 

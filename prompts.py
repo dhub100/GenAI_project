@@ -4,7 +4,6 @@ PROMPT_PRESETS = {
         "Answer concisely (maximum 3 sentences) and only based on the context below.\n\n"
         "Context:\n{context_text}\n\nQuestion:\n{final_form_query}\n\nAnswer:"
     ),
-
     "academic": (
         "[SYSTEM]\n"
         "You are an academic literature analyst and researcher.\n"
@@ -19,7 +18,6 @@ PROMPT_PRESETS = {
         "Limit your answer to a maximum of 3 sentences.\n\n"
         "[ANSWER]:"
     ),
-
     "debate": (
         "[SYSTEM]\n"
         "You are a critical thinker participating in a philosophical debate.\n"
@@ -34,7 +32,6 @@ PROMPT_PRESETS = {
         "Answer in a maximum of 3 sentences.\n\n"
         "[ANSWER]:"
     ),
-
     "psychology": (
         "[SYSTEM]\n"
         "You are a psychologist analyzing emotional and behavioral aspects of fictional characters.\n"
@@ -49,7 +46,6 @@ PROMPT_PRESETS = {
         "Answer in a maximum of 3 sentences.\n\n"
         "[ANSWER]:"
     ),
-
     "historical": (
         "[SYSTEM]\n"
         "You are a historical and political science expert analyzing literature.\n"
@@ -62,5 +58,5 @@ PROMPT_PRESETS = {
         "Explain the political and social implications concisely and analytically. "
         "Answer in a maximum of 3 sentences.\n\n"
         "[ANSWER]:"
-    )
+    ),
 }
