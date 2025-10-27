@@ -173,6 +173,9 @@ The results showed that changes in parameters such as **compression**, **number 
 The **type of question**, however, had a much stronger influence. Some questions consistently received high scores, while others scored low across all parameter settings.\
 This suggests that the **quality and clarity of the questions** play an important role in the evaluation and should be analyzed further in future work.
 
+The retrieval quality​, chunk comprehension with Natural Language Processing​ should also be explored in further work, as well as if fact accuracy is negatively impacted by semantic chunking​.
+
+
 ------------------------------------------------------------------------
 
 ## License
